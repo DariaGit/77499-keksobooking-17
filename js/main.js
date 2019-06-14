@@ -28,11 +28,11 @@ function getRandomElement(array) {
   return randomElement;
 }
 
-function getRandomNumber (min, max) {
+function getRandomNumber(min, max) {
   return Math.round(Math.random() * (max - min) + min);
-};
+}
 
-function getAvatars (avatarsCount) {
+function getAvatars(avatarsCount) {
   var avatarUrls = [];
 
   for (var i = 1; i < avatarsCount + 1; i++) {
@@ -41,23 +41,23 @@ function getAvatars (avatarsCount) {
   return avatarUrls;
 }
 
-function getMapsPin () {
- return {
+function getMapsPin() {
+  return {
     'author': {
-      'avatar': getRandomElement(getAvatars (8))
+      'avatar': getRandomElement(getAvatars(8))
     },
-    "offer": {
-      "type": getRandomElement(typesOfAccommodation)
+    'offer': {
+      'type': getRandomElement(typesOfAccommodation)
     },
 
-    "location": {
-      "x": getRandomNumber (0, 1200),
-      "y": getRandomNumber (Y_START, Y_END)
+    'location': {
+      'x': getRandomNumber(0, MAP_WIDTH),
+      'y': getRandomNumber(Y_START, Y_END)
     }
-  }
+  };
 }
 
-function renderAllPins (count) {
+function renderAllPins(count) {
   var allPins = [];
 
   for (var i = 0; i < count; i++) {
@@ -66,7 +66,7 @@ function renderAllPins (count) {
   return shuffle(allPins);
 }
 
-function addPinsOnMap () {
+function addPinsOnMap() {
   pins = renderAllPins(8);
 
   for (var i = 0; i < pins.length; i++) {
