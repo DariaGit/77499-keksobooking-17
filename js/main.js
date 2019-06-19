@@ -13,6 +13,7 @@ var ACCOMODATION_TYPES = [
 ];
 var AVATARS_LIMIT = 8;
 var PINS_LIMIT = 8;
+var adFormFieldsets = [];
 
 function generateRandomNumber(min, max) {
   return Math.round(Math.random() * (max - min) + min);
@@ -81,12 +82,54 @@ function renderPins(pins) {
   mapPinsElement.appendChild(fragment);
 }
 
+function addDisabledAttribute(elem) {
+  elem.setAttribute('disabled', 'disabled');
+}
+
+function addDisabledAttributes(elems) {
+  for (var i = 0; i < elems.length; i++) {
+    addDisabledAttribute(elems[i]);
+  }
+}
+
+function removeDisabledAttribute(elem) {
+  elem.removeAttribute('disabled');
+}
+
+function removeDisabledAttributes(elems) {
+  for (var i = 0; i < elems.length; i++) {
+    removeDisabledAttribute(elems[i]);
+  }
+}
+
+function activationPage() {
+  addFormElement.classList.remove('map--faded');
+  addFormElement.classList.remove('ad-form--disabled');
+  filtersElement.classList.remove('map__filters--disabled');
+  removeDisabledAttributes(adFormFieldsets);
+}
+
+function deactivationPage() {
+  mapElement.classList.add('map--faded');
+  addFormElement.classList.add('ad-form--disabled');
+  filtersElement.classList.add('map__filters--disabled');
+  addDisabledAttributes(adFormFieldsets);
+}
+
+var mapPinMainElement = document.querySelector('.map__pin--main');
+mapPinMainElement.addEventListener('click', function () {
+  activationPage();
+});
+
 var mapElement = document.querySelector('.map');
+var addFormElement = document.querySelector('.ad-form');
+adFormFieldsets = addFormElement.querySelectorAll('fieldset');
+var filtersElement = document.querySelector('.map__filters');
 var mapPinsElement = document.querySelector('.map__pins');
 var pinTemplateElement = document.querySelector('#pin').content.querySelector('button');
 var avatarURLs = createAvatarURLs(AVATARS_LIMIT);
 var pins = createPins(PINS_LIMIT);
 
 renderPins(pins);
+deactivationPage();
 
-mapElement.classList.remove('map--faded');
