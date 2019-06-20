@@ -89,9 +89,9 @@ function addDisabledAttribute(elem) {
 }
 
 function addDisabledAttributes(elems) {
-  for (var i = 0; i < elems.length; i++) {
-    addDisabledAttribute(elems[i]);
-  }
+  elems.forEach(function (elem) {
+    addDisabledAttribute(elem);
+  });
 }
 
 function removeDisabledAttribute(elem) {
