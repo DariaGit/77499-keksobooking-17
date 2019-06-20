@@ -15,7 +15,6 @@ var ACCOMODATION_TYPES = [
 ];
 var AVATARS_LIMIT = 8;
 var PINS_LIMIT = 8;
-var adFormFieldsets = [];
 
 function generateRandomNumber(min, max) {
   return Math.round(Math.random() * (max - min) + min);
@@ -141,7 +140,7 @@ mapPinMainElement.addEventListener('mouseup', function () {
 
 var mapElement = document.querySelector('.map');
 var addFormElement = document.querySelector('.ad-form');
-adFormFieldsets = addFormElement.querySelectorAll('fieldset');
+var adFormFieldsets = addFormElement.querySelectorAll('fieldset');
 var addFormAddressInput = addFormElement.querySelector('input[name="address"]');
 var filtersElement = document.querySelector('.map__filters');
 var mapPinsElement = document.querySelector('.map__pins');
