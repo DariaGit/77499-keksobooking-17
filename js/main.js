@@ -104,7 +104,7 @@ function removeDisabledAttributes(elems) {
   }
 }
 
-function activationPage() {
+function activatePage() {
   mapElement.classList.remove('map--faded');
   addFormElement.classList.remove('ad-form--disabled');
   filtersElement.classList.remove('map__filters--disabled');
@@ -112,7 +112,7 @@ function activationPage() {
   removeDisabledAttributes(adFormFieldsets);
 }
 
-function deactivationPage() {
+function deactivatePage() {
   mapElement.classList.add('map--faded');
   addFormElement.classList.add('ad-form--disabled');
   filtersElement.classList.add('map__filters--disabled');
@@ -141,7 +141,7 @@ function getStartPinCoordinates() {
 
 var mapPinMainElement = document.querySelector('.map__pin--main');
 mapPinMainElement.addEventListener('mouseup', function () {
-  activationPage();
+  activatePage();
   getStartPinCoordinates();
 });
 
@@ -155,6 +155,5 @@ var pinTemplateElement = document.querySelector('#pin').content.querySelector('b
 var avatarURLs = createAvatarURLs(AVATARS_LIMIT);
 var pins = createPins(PINS_LIMIT);
 
-deactivationPage();
+deactivatePage();
 getStartPinCoordinates();
-
