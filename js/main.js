@@ -121,12 +121,10 @@ function deactivatePage() {
 
 function getOffsetRect(elem) {
   var box = elem.getBoundingClientRect();
-  var body = document.body;
-  var docElem = document.documentElement;
-  var scrollTop = window.pageYOffset || docElem.scrollTop || body.scrollTop;
-  var scrollLeft = window.pageXOffset || docElem.scrollLeft || body.scrollLeft;
-  var clientTop = docElem.clientTop || body.clientTop || 0;
-  var clientLeft = docElem.clientLeft || body.clientLeft || 0;
+  var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+  var scrollLeft = window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft;
+  var clientTop = document.documentElement.clientTop || document.body.clientTop || 0;
+  var clientLeft = document.documentElement.clientLeft || document.body.clientLeft || 0;
   var top = box.top + scrollTop - clientTop;
   var left = box.left + scrollLeft - clientLeft;
   return {top: Math.round(top), left: Math.round(left)};
