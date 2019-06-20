@@ -5,6 +5,8 @@ var PIN_WIDTH = 50;
 var PIN_HEIGHT = 70;
 var PIN_LIMIT_Y_START = 130;
 var PIN_LIMIT_Y_END = 630;
+var START_PIN_WIDTH = 156;
+var START_PIN_HEIGHT = 156;
 var ACCOMODATION_TYPES = [
   'palace',
   'flat',
@@ -117,14 +119,36 @@ function deactivationPage() {
   addDisabledAttributes(adFormFieldsets);
 }
 
+function getOffsetRect(elem) {
+  var box = elem.getBoundingClientRect();
+  var body = document.body;
+  var docElem = document.documentElement;
+  var scrollTop = window.pageYOffset || docElem.scrollTop || body.scrollTop;
+  var scrollLeft = window.pageXOffset || docElem.scrollLeft || body.scrollLeft;
+  var clientTop = docElem.clientTop || body.clientTop || 0;
+  var clientLeft = docElem.clientLeft || body.clientLeft || 0;
+  var top = box.top + scrollTop - clientTop;
+  var left = box.left + scrollLeft - clientLeft;
+  return {top: Math.round(top), left: Math.round(left)};
+}
+
+function getStartPinCoordinates() {
+  var startPinCoordinates = getOffsetRect(mapPinMainElement);
+  var startPinMiddleX = startPinCoordinates.top + START_PIN_WIDTH * 0.5;
+  var startPinMiddleY = startPinCoordinates.left - START_PIN_HEIGHT * 0.5;
+  addFormAddressInput.value = startPinMiddleX + ', ' + startPinMiddleY;
+}
+
 var mapPinMainElement = document.querySelector('.map__pin--main');
-mapPinMainElement.addEventListener('click', function () {
+mapPinMainElement.addEventListener('mouseup', function () {
   activationPage();
+  getStartPinCoordinates();
 });
 
 var mapElement = document.querySelector('.map');
 var addFormElement = document.querySelector('.ad-form');
 adFormFieldsets = addFormElement.querySelectorAll('fieldset');
+var addFormAddressInput = addFormElement.querySelector('input[name="address"]');
 var filtersElement = document.querySelector('.map__filters');
 var mapPinsElement = document.querySelector('.map__pins');
 var pinTemplateElement = document.querySelector('#pin').content.querySelector('button');
@@ -132,4 +156,5 @@ var avatarURLs = createAvatarURLs(AVATARS_LIMIT);
 var pins = createPins(PINS_LIMIT);
 
 deactivationPage();
+getStartPinCoordinates();
 
