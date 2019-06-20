@@ -84,20 +84,20 @@ function renderPins(pins) {
   mapPinsElement.appendChild(fragment);
 }
 
-function addDisabledAttribute(elem) {
-  elem.setAttribute('disabled', 'disabled');
+function addDisabledAttribute(element) {
+  element.setAttribute('disabled', 'disabled');
 }
 
-function addDisabledAttributes(elems) {
-  elems.forEach(addDisabledAttribute);
+function addDisabledAttributes(elements) {
+  elements.forEach(addDisabledAttribute);
 }
 
-function removeDisabledAttribute(elem) {
-  elem.removeAttribute('disabled');
+function removeDisabledAttribute(element) {
+  element.removeAttribute('disabled');
 }
 
-function removeDisabledAttributes(elems) {
-  elems.forEach(removeDisabledAttribute);
+function removeDisabledAttributes(elements) {
+  elements.forEach(removeDisabledAttribute);
 }
 
 function activatePage() {
@@ -115,8 +115,8 @@ function deactivatePage() {
   addDisabledAttributes(adFormFieldsets);
 }
 
-function getOffsetRect(elem) {
-  var box = elem.getBoundingClientRect();
+function getOffsetRect(element) {
+  var box = element.getBoundingClientRect();
   var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
   var scrollLeft = window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft;
   var clientTop = document.documentElement.clientTop || document.body.clientTop || 0;
