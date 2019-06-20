@@ -89,9 +89,7 @@ function addDisabledAttribute(elem) {
 }
 
 function addDisabledAttributes(elems) {
-  elems.forEach(function (elem) {
-    addDisabledAttribute(elem);
-  });
+  elems.forEach(addDisabledAttribute);
 }
 
 function removeDisabledAttribute(elem) {
@@ -99,9 +97,7 @@ function removeDisabledAttribute(elem) {
 }
 
 function removeDisabledAttributes(elems) {
-  elems.forEach(function (elem) {
-    removeDisabledAttribute(elem);
-  });
+  elems.forEach(removeDisabledAttribute);
 }
 
 function activatePage() {
