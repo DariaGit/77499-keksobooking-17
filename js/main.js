@@ -103,9 +103,10 @@ function removeDisabledAttributes(elems) {
 }
 
 function activationPage() {
-  addFormElement.classList.remove('map--faded');
+  mapElement.classList.remove('map--faded');
   addFormElement.classList.remove('ad-form--disabled');
   filtersElement.classList.remove('map__filters--disabled');
+  renderPins(pins);
   removeDisabledAttributes(adFormFieldsets);
 }
 
@@ -130,6 +131,5 @@ var pinTemplateElement = document.querySelector('#pin').content.querySelector('b
 var avatarURLs = createAvatarURLs(AVATARS_LIMIT);
 var pins = createPins(PINS_LIMIT);
 
-renderPins(pins);
 deactivationPage();
 
