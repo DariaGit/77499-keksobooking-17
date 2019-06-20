@@ -99,9 +99,9 @@ function removeDisabledAttribute(elem) {
 }
 
 function removeDisabledAttributes(elems) {
-  for (var i = 0; i < elems.length; i++) {
-    removeDisabledAttribute(elems[i]);
-  }
+  elems.forEach(function (elem) {
+    removeDisabledAttribute(elem);
+  });
 }
 
 function activatePage() {
