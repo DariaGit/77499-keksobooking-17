@@ -132,7 +132,7 @@ function getOffsetRect(elem) {
   return {top: Math.round(top), left: Math.round(left)};
 }
 
-function getStartPinCoordinates() {
+function addStartPinCoordinates() {
   var startPinCoordinates = getOffsetRect(mapPinMainElement);
   var startPinMiddleX = startPinCoordinates.top + START_PIN_WIDTH * 0.5;
   var startPinMiddleY = startPinCoordinates.left - START_PIN_HEIGHT * 0.5;
@@ -142,7 +142,7 @@ function getStartPinCoordinates() {
 var mapPinMainElement = document.querySelector('.map__pin--main');
 mapPinMainElement.addEventListener('mouseup', function () {
   activatePage();
-  getStartPinCoordinates();
+  addStartPinCoordinates();
 });
 
 var mapElement = document.querySelector('.map');
@@ -156,4 +156,4 @@ var avatarURLs = createAvatarURLs(AVATARS_LIMIT);
 var pins = createPins(PINS_LIMIT);
 
 deactivatePage();
-getStartPinCoordinates();
+addStartPinCoordinates();
