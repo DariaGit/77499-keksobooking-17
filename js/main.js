@@ -103,7 +103,6 @@ function activatePage() {
   mapElement.classList.remove('map--faded');
   addFormElement.classList.remove('ad-form--disabled');
   filtersElement.classList.remove('map__filters--disabled');
-  renderPins(pins);
   removeDisabledAttributes(adFormFieldsets);
 }
 
@@ -129,19 +128,20 @@ function addStartPinCoordinates() {
   var startPinCoordinates = getOffsetRect(mapPinMainElement);
   var startPinMiddleX = startPinCoordinates.top + START_PIN_WIDTH * 0.5;
   var startPinMiddleY = startPinCoordinates.left - START_PIN_HEIGHT * 0.5;
-  addFormAddressInput.value = startPinMiddleX + ', ' + startPinMiddleY;
+  addFormAddressInputElement.value = startPinMiddleX + ', ' + startPinMiddleY;
 }
 
 var mapPinMainElement = document.querySelector('.map__pin--main');
 mapPinMainElement.addEventListener('mouseup', function () {
   activatePage();
+  renderPins(pins);
   addStartPinCoordinates();
 });
 
 var mapElement = document.querySelector('.map');
 var addFormElement = document.querySelector('.ad-form');
 var adFormFieldsets = addFormElement.querySelectorAll('fieldset');
-var addFormAddressInput = addFormElement.querySelector('input[name="address"]');
+var addFormAddressInputElement = addFormElement.querySelector('input[name="address"]');
 var filtersElement = document.querySelector('.map__filters');
 var mapPinsElement = document.querySelector('.map__pins');
 var pinTemplateElement = document.querySelector('#pin').content.querySelector('button');
