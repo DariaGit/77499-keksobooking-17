@@ -5,8 +5,6 @@ var PIN_WIDTH = 50;
 var PIN_HEIGHT = 70;
 var PIN_LIMIT_Y_START = 130;
 var PIN_LIMIT_Y_END = 630;
-var START_PIN_WIDTH = 62;
-var START_PIN_HEIGHT = 62;
 var ACCOMODATION_TYPES = [
   'palace',
   'flat',
