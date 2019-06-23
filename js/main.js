@@ -13,6 +13,9 @@ var ACCOMODATION_TYPES = [
 ];
 var AVATARS_LIMIT = 8;
 var PINS_LIMIT = 8;
+var PIN_LEG_HEIGHT = 22;
+
+var isPageActive;
 
 function generateRandomNumber(min, max) {
   return Math.round(Math.random() * (max - min) + min);
@@ -81,12 +84,72 @@ function renderPins(pins) {
   mapPinsElement.appendChild(fragment);
 }
 
+function addDisabledAttribute(element) {
+  element.setAttribute('disabled', 'disabled');
+}
+
+function addDisabledAttributes(elements) {
+  elements.forEach(addDisabledAttribute);
+}
+
+function removeDisabledAttribute(element) {
+  element.removeAttribute('disabled');
+}
+
+function removeDisabledAttributes(elements) {
+  elements.forEach(removeDisabledAttribute);
+}
+
+function activatePage() {
+  mapElement.classList.remove('map--faded');
+  addFormElement.classList.remove('ad-form--disabled');
+  filtersElement.classList.remove('map__filters--disabled');
+  removeDisabledAttributes(adFormFieldsets);
+  isPageActive = true;
+}
+
+function deactivatePage() {
+  mapElement.classList.add('map--faded');
+  addFormElement.classList.add('ad-form--disabled');
+  filtersElement.classList.add('map__filters--disabled');
+  addDisabledAttributes(adFormFieldsets);
+  isPageActive = false;
+}
+
+function calculateMainPinCoords() {
+  var mainPinRect = mapPinMainImageElement.getBoundingClientRect();
+  var mapRect = mapPinsElement.getBoundingClientRect();
+  var topOffset = isPageActive ? mainPinRect.height + PIN_LEG_HEIGHT : mainPinRect.height / 2;
+
+  return {
+    top: Math.round(mainPinRect.top - mapRect.top + topOffset),
+    left: Math.round(mainPinRect.left - mapRect.left + mainPinRect.width / 2)
+  };
+}
+
+function addStartPinCoordinates() {
+  var coordinates = calculateMainPinCoords();
+  addFormAddressInputElement.value = coordinates.left + ', ' + coordinates.top;
+}
+
+var mapPinMainElement = document.querySelector('.map__pin--main');
+mapPinMainElement.addEventListener('mouseup', function () {
+  activatePage();
+  renderPins(pins);
+  addStartPinCoordinates();
+});
+
 var mapElement = document.querySelector('.map');
+var mapPinMainImageElement = document.querySelector('.map__pin--main img');
+var addFormElement = document.querySelector('.ad-form');
+var adFormFieldsets = addFormElement.querySelectorAll('fieldset');
+var addFormAddressInputElement = addFormElement.querySelector('input[name="address"]');
+var filtersElement = document.querySelector('.map__filters');
 var mapPinsElement = document.querySelector('.map__pins');
 var pinTemplateElement = document.querySelector('#pin').content.querySelector('button');
 var avatarURLs = createAvatarURLs(AVATARS_LIMIT);
 var pins = createPins(PINS_LIMIT);
 
-renderPins(pins);
+deactivatePage();
+addStartPinCoordinates();
 
-mapElement.classList.remove('map--faded');
