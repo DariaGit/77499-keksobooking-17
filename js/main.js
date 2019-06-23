@@ -121,7 +121,7 @@ function deactivatePage() {
 function calculateMainPinCoords() {
   var mainPinRect = mapPinMainImageElement.getBoundingClientRect();
   var mapRect = mapPinsElement.getBoundingClientRect();
-  var topOffset = isPageActive ? mainPinRect.height / 2 : mainPinRect.height + PIN_LEG_HEIGHT;
+  var topOffset = isPageActive ? mainPinRect.height + PIN_LEG_HEIGHT : mainPinRect.height / 2;
 
   return {
     top: Math.round(mainPinRect.top - mapRect.top + topOffset),
