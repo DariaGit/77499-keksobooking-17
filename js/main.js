@@ -5,8 +5,8 @@ var PIN_WIDTH = 50;
 var PIN_HEIGHT = 70;
 var PIN_LIMIT_Y_START = 130;
 var PIN_LIMIT_Y_END = 630;
-var START_PIN_WIDTH = 156;
-var START_PIN_HEIGHT = 156;
+var START_PIN_WIDTH = 62;
+var START_PIN_HEIGHT = 62;
 var ACCOMODATION_TYPES = [
   'palace',
   'flat',
@@ -17,7 +17,7 @@ var AVATARS_LIMIT = 8;
 var PINS_LIMIT = 8;
 var PIN_LEG_HEIGHT = 22;
 
-var isPageActive = false;
+var isPageActive;
 
 function generateRandomNumber(min, max) {
   return Math.round(Math.random() * (max - min) + min);
@@ -121,29 +121,17 @@ function deactivatePage() {
 function calculateMainPinCoords() {
   var mainPinRect = mapPinMainImageElement.getBoundingClientRect();
   var mapRect = mapPinsElement.getBoundingClientRect();
+  var topOffset = isPageActive ? mainPinRect.height / 2 : mainPinRect.height + PIN_LEG_HEIGHT;
 
   return {
-    top: mainPinRect.top - mapRect.top,
-    left: mainPinRect.left - mapRect.left,
-    height: mapRect.height,
-    width: mapRect.width
+    top: Math.round(mainPinRect.top - mapRect.top + topOffset),
+    left: Math.round(mainPinRect.left - mapRect.left + mainPinRect.width / 2)
   };
 }
 
 function addStartPinCoordinates() {
-  var startPinCoordinates = calculateMainPinCoords();
-  var startPinMiddleX;
-  var startPinMiddleY;
-
-  if (isPageActive === false) {
-    startPinMiddleX = Math.round(startPinCoordinates.top + START_PIN_WIDTH * 0.5);
-    startPinMiddleY = Math.round(startPinCoordinates.left - START_PIN_HEIGHT * 0.5);
-  } else {
-    startPinMiddleX = Math.round(startPinCoordinates.top + START_PIN_WIDTH * 0.5);
-    startPinMiddleY = Math.round(startPinCoordinates.left - START_PIN_HEIGHT + PIN_LEG_HEIGHT);
-  }
-
-  addFormAddressInputElement.value = startPinMiddleX + ', ' + startPinMiddleY;
+  var coordinates = calculateMainPinCoords();
+  addFormAddressInputElement.value = coordinates.left + ', ' + coordinates.top;
 }
 
 var mapPinMainElement = document.querySelector('.map__pin--main');
