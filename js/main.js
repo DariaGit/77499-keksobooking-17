@@ -153,3 +153,30 @@ var pins = createPins(PINS_LIMIT);
 deactivatePage();
 addStartPinCoordinates();
 
+//----------------------------------------------------------
+var typeElement = document.querySelector('#type');
+var typeElements = typeElement.querySelectorAll('option');
+var priceElement = document.querySelector('#price');
+
+function validationType() {
+  for (var i = 0; i < typeElements.length; i++) {
+    if (typeElements[i].getAttribute('value') === 'bungalo' && typeElements[i].hasAttribute('selected')) {
+      priceElement.setAttribute('min', 0);
+      priceElement.setAttribute('placeholder', '0');
+    } else if (typeElements[i].getAttribute('value') === 'flat' && typeElements[i].hasAttribute('selected')) {
+      priceElement.setAttribute('min', 1000);
+      priceElement.setAttribute('placeholder', '1000');
+    } else if (typeElements[i].getAttribute('value') === 'house' && typeElements[i].hasAttribute('selected')) {
+      priceElement.setAttribute('min', 5000);
+      priceElement.setAttribute('placeholder', '5000');
+    } else if (typeElements[i].getAttribute('value') === 'palace' && typeElements[i].hasAttribute('selected')) {
+      priceElement.setAttribute('min', 10000);
+      priceElement.setAttribute('placeholder', '10000');
+    }
+  }
+}
+
+typeElements.addEventListener('click', function () {
+  validationType();
+});
+
