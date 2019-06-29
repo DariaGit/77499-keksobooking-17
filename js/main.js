@@ -139,19 +139,12 @@ function addStartPinCoordinates() {
   addFormAddressInputElement.value = coordinates.left + ', ' + coordinates.top;
 }
 
-function updateFormPriceAttributes(evt) {
-  var type = evt;
+function updateFormPriceAttributes(type) {
   formPriceElement.setAttribute('min', RoomTypeMinPriceMap[type]);
   formPriceElement.setAttribute('placeholder', RoomTypeMinPriceMap[type]);
 }
 
 var mapPinMainElement = document.querySelector('.map__pin--main');
-mapPinMainElement.addEventListener('mouseup', function () {
-  activatePage();
-  renderPins(pins);
-  addStartPinCoordinates();
-});
-
 var mapElement = document.querySelector('.map');
 var mapPinMainImageElement = document.querySelector('.map__pin--main img');
 var addFormElement = document.querySelector('.ad-form');
@@ -166,6 +159,12 @@ var formTimeInElement = document.querySelector('#timein');
 var formTimeOutElement = document.querySelector('#timeout');
 var avatarURLs = createAvatarURLs(AVATARS_LIMIT);
 var pins = createPins(PINS_LIMIT);
+
+mapPinMainElement.addEventListener('mouseup', function () {
+  activatePage();
+  renderPins(pins);
+  addStartPinCoordinates();
+});
 
 formTypeElement.addEventListener('change', function (evt) {
   updateFormPriceAttributes(evt.target.value);
