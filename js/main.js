@@ -176,7 +176,7 @@ function validationType() {
   }
 }
 
-typeElements.addEventListener('click', function () {
+typeElements.addEventListener('change', function () {
   validationType();
 });
 
