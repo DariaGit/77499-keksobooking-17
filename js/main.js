@@ -152,7 +152,6 @@ var pins = createPins(PINS_LIMIT);
 
 var formTypeElement = document.querySelector('#type');
 var formPriceElement = document.querySelector('#price');
-
 formTypeElement.addEventListener('change', function (evt) {
   if (evt.target.value === 'bungalo') {
     formPriceElement.setAttribute('min', 0);
@@ -166,6 +165,28 @@ formTypeElement.addEventListener('change', function (evt) {
   } else if (evt.target.value === 'palace') {
     formPriceElement.setAttribute('min', 10000);
     formPriceElement.setAttribute('placeholder', '10000');
+  }
+});
+
+var formTimeInElement = document.querySelector('#timein');
+var formTimeOutElement = document.querySelector('#timeout');
+formTimeInElement.addEventListener('change', function (evt) {
+  if (evt.target.value === '12:00') {
+    formTimeOutElement.selectedIndex = 0;
+  } else if (evt.target.value === '13:00') {
+    formTimeOutElement.selectedIndex = 1;
+  } else if (evt.target.value === '14:00') {
+    formTimeOutElement.selectedIndex = 2;
+  }
+});
+
+formTimeOutElement.addEventListener('change', function (evt) {
+  if (evt.target.value === '12:00') {
+    formTimeInElement.selectedIndex = 0;
+  } else if (evt.target.value === '13:00') {
+    formTimeInElement.selectedIndex = 1;
+  } else if (evt.target.value === '14:00') {
+    formTimeInElement.selectedIndex = 2;
   }
 });
 
