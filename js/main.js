@@ -14,6 +14,7 @@ var ACCOMODATION_TYPES = [
 var AVATARS_LIMIT = 8;
 var PINS_LIMIT = 8;
 var PIN_LEG_HEIGHT = 22;
+
 var RoomTypeMinPriceMap = {
   bungalo: 0,
   flat: 1000,
@@ -138,6 +139,12 @@ function addStartPinCoordinates() {
   addFormAddressInputElement.value = coordinates.left + ', ' + coordinates.top;
 }
 
+function updateFormPriceAttributes(evt) {
+  var type = evt;
+  formPriceElement.setAttribute('min', RoomTypeMinPriceMap[type]);
+  formPriceElement.setAttribute('placeholder', RoomTypeMinPriceMap[type]);
+}
+
 var mapPinMainElement = document.querySelector('.map__pin--main');
 mapPinMainElement.addEventListener('mouseup', function () {
   activatePage();
@@ -153,25 +160,20 @@ var addFormAddressInputElement = addFormElement.querySelector('input[name="addre
 var filtersElement = document.querySelector('.map__filters');
 var mapPinsElement = document.querySelector('.map__pins');
 var pinTemplateElement = document.querySelector('#pin').content.querySelector('button');
+var formTypeElement = document.querySelector('#type');
+var formPriceElement = document.querySelector('#price');
+var formTimeInElement = document.querySelector('#timein');
+var formTimeOutElement = document.querySelector('#timeout');
 var avatarURLs = createAvatarURLs(AVATARS_LIMIT);
 var pins = createPins(PINS_LIMIT);
 
-var formTypeElement = document.querySelector('#type');
-var formPriceElement = document.querySelector('#price');
-
 formTypeElement.addEventListener('change', function (evt) {
-  var type = evt.target.value;
-  formPriceElement.setAttribute('min', RoomTypeMinPriceMap[type]);
-  formPriceElement.setAttribute('placeholder', RoomTypeMinPriceMap[type]);
+  updateFormPriceAttributes(evt.target.value);
 });
-
-var formTimeInElement = document.querySelector('#timein');
-var formTimeOutElement = document.querySelector('#timeout');
 
 formTimeInElement.addEventListener('change', function (evt) {
   formTimeOutElement.selectedIndex = evt.target.selectedIndex;
 });
-
 
 formTimeOutElement.addEventListener('change', function (evt) {
   formTimeInElement.selectedIndex = evt.target.selectedIndex;
@@ -179,5 +181,6 @@ formTimeOutElement.addEventListener('change', function (evt) {
 
 deactivatePage();
 addStartPinCoordinates();
+updateFormPriceAttributes(formTypeElement.value);
 
 
