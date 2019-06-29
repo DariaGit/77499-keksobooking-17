@@ -14,6 +14,12 @@ var ACCOMODATION_TYPES = [
 var AVATARS_LIMIT = 8;
 var PINS_LIMIT = 8;
 var PIN_LEG_HEIGHT = 22;
+var RoomTypeMinPriceMap = {
+  bungalo: 0,
+  flat: 1000,
+  house: 5000,
+  palace: 10000
+};
 
 var isPageActive;
 
@@ -152,42 +158,23 @@ var pins = createPins(PINS_LIMIT);
 
 var formTypeElement = document.querySelector('#type');
 var formPriceElement = document.querySelector('#price');
+
 formTypeElement.addEventListener('change', function (evt) {
-  if (evt.target.value === 'bungalo') {
-    formPriceElement.setAttribute('min', 0);
-    formPriceElement.setAttribute('placeholder', '0');
-  } else if (evt.target.value === 'flat') {
-    formPriceElement.setAttribute('min', 1000);
-    formPriceElement.setAttribute('placeholder', '1000');
-  } else if (evt.target.value === 'house') {
-    formPriceElement.setAttribute('min', 5000);
-    formPriceElement.setAttribute('placeholder', '5000');
-  } else if (evt.target.value === 'palace') {
-    formPriceElement.setAttribute('min', 10000);
-    formPriceElement.setAttribute('placeholder', '10000');
-  }
+  var type = evt.target.value;
+  formPriceElement.setAttribute('min', RoomTypeMinPriceMap[type]);
+  formPriceElement.setAttribute('placeholder', RoomTypeMinPriceMap[type]);
 });
 
 var formTimeInElement = document.querySelector('#timein');
 var formTimeOutElement = document.querySelector('#timeout');
+
 formTimeInElement.addEventListener('change', function (evt) {
-  if (evt.target.value === '12:00') {
-    formTimeOutElement.selectedIndex = 0;
-  } else if (evt.target.value === '13:00') {
-    formTimeOutElement.selectedIndex = 1;
-  } else if (evt.target.value === '14:00') {
-    formTimeOutElement.selectedIndex = 2;
-  }
+  formTimeOutElement.selectedIndex = evt.target.selectedIndex;
 });
 
+
 formTimeOutElement.addEventListener('change', function (evt) {
-  if (evt.target.value === '12:00') {
-    formTimeInElement.selectedIndex = 0;
-  } else if (evt.target.value === '13:00') {
-    formTimeInElement.selectedIndex = 1;
-  } else if (evt.target.value === '14:00') {
-    formTimeInElement.selectedIndex = 2;
-  }
+  formTimeInElement.selectedIndex = evt.target.selectedIndex;
 });
 
 deactivatePage();
