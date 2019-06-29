@@ -15,6 +15,13 @@ var AVATARS_LIMIT = 8;
 var PINS_LIMIT = 8;
 var PIN_LEG_HEIGHT = 22;
 
+var RoomTypeMinPriceMap = {
+  bungalo: 0,
+  flat: 1000,
+  house: 5000,
+  palace: 10000
+};
+
 var isPageActive;
 
 function generateRandomNumber(min, max) {
@@ -132,13 +139,12 @@ function addStartPinCoordinates() {
   addFormAddressInputElement.value = coordinates.left + ', ' + coordinates.top;
 }
 
-var mapPinMainElement = document.querySelector('.map__pin--main');
-mapPinMainElement.addEventListener('mouseup', function () {
-  activatePage();
-  renderPins(pins);
-  addStartPinCoordinates();
-});
+function updateFormPriceAttributes(type) {
+  formPriceElement.setAttribute('min', RoomTypeMinPriceMap[type]);
+  formPriceElement.setAttribute('placeholder', RoomTypeMinPriceMap[type]);
+}
 
+var mapPinMainElement = document.querySelector('.map__pin--main');
 var mapElement = document.querySelector('.map');
 var mapPinMainImageElement = document.querySelector('.map__pin--main img');
 var addFormElement = document.querySelector('.ad-form');
@@ -147,9 +153,33 @@ var addFormAddressInputElement = addFormElement.querySelector('input[name="addre
 var filtersElement = document.querySelector('.map__filters');
 var mapPinsElement = document.querySelector('.map__pins');
 var pinTemplateElement = document.querySelector('#pin').content.querySelector('button');
+var formTypeElement = document.querySelector('#type');
+var formPriceElement = document.querySelector('#price');
+var formTimeInElement = document.querySelector('#timein');
+var formTimeOutElement = document.querySelector('#timeout');
 var avatarURLs = createAvatarURLs(AVATARS_LIMIT);
 var pins = createPins(PINS_LIMIT);
 
+mapPinMainElement.addEventListener('mouseup', function () {
+  activatePage();
+  renderPins(pins);
+  addStartPinCoordinates();
+});
+
+formTypeElement.addEventListener('change', function (evt) {
+  updateFormPriceAttributes(evt.target.value);
+});
+
+formTimeInElement.addEventListener('change', function (evt) {
+  formTimeOutElement.selectedIndex = evt.target.selectedIndex;
+});
+
+formTimeOutElement.addEventListener('change', function (evt) {
+  formTimeInElement.selectedIndex = evt.target.selectedIndex;
+});
+
 deactivatePage();
 addStartPinCoordinates();
+updateFormPriceAttributes(formTypeElement.value);
+
 
