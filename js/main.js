@@ -5,6 +5,9 @@ var PIN_WIDTH = 50;
 var PIN_HEIGHT = 70;
 var PIN_LIMIT_Y_START = 130;
 var PIN_LIMIT_Y_END = 630;
+var MAX_TOP_SHIFT = 130;
+var MAX_BOTTOM_SHIFT = 630;
+var MAX_LEFT_SHIFT = 0;
 var ACCOMODATION_TYPES = [
   'palace',
   'flat',
@@ -160,10 +163,45 @@ var formTimeOutElement = document.querySelector('#timeout');
 var avatarURLs = createAvatarURLs(AVATARS_LIMIT);
 var pins = createPins(PINS_LIMIT);
 
-mapPinMainElement.addEventListener('mouseup', function () {
-  activatePage();
-  renderPins(pins);
-  addStartPinCoordinates();
+mapPinMainElement.addEventListener('mousedown', function (evt) {
+  evt.preventDefault();
+  if (!isPageActive) {
+    activatePage();
+    renderPins(pins);
+  }
+  var startCoords = {
+    x: evt.clientX,
+    y: evt.clientY
+  };
+
+  function onMouseMove(moveEvt) {
+    moveEvt.preventDefault();
+    addStartPinCoordinates();
+    var shift = {
+      x: startCoords.x - moveEvt.clientX,
+      y: startCoords.y - moveEvt.clientY
+    };
+
+    startCoords = {
+      x: moveEvt.clientX,
+      y: moveEvt.clientY
+    };
+
+    var newCoordTop = mapPinMainElement.offsetTop - shift.y;
+    var newCoordLeft = mapPinMainElement.offsetLeft - shift.x;
+    mapPinMainElement.style.top = Math.max(MAX_TOP_SHIFT, Math.min(newCoordTop, MAX_BOTTOM_SHIFT)) + 'px';
+    mapPinMainElement.style.left = Math.max(MAX_LEFT_SHIFT, Math.min(newCoordLeft, MAP_WIDTH - PIN_WIDTH)) + 'px';
+  }
+
+  var onMouseUp = function (upEvt) {
+    upEvt.preventDefault();
+
+    document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mouseup', onMouseUp);
+  };
+
+  document.addEventListener('mousemove', onMouseMove);
+  document.addEventListener('mouseup', onMouseUp);
 });
 
 formTypeElement.addEventListener('change', function (evt) {
