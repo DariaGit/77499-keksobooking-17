@@ -187,8 +187,10 @@ mapPinMainElement.addEventListener('mousedown', function (evt) {
       y: moveEvt.clientY
     };
 
-    mapPinMainElement.style.top = Math.max(MAX_TOP_SHIFT, Math.min((mapPinMainElement.offsetTop - shift.y), MAX_BOTTOM_SHIFT)) + 'px';
-    mapPinMainElement.style.left = Math.max(MAX_LEFT_SHIFT, Math.min((mapPinMainElement.offsetLeft - shift.x), MAP_WIDTH - PIN_WIDTH)) + 'px';
+    var newCoordTop = mapPinMainElement.offsetTop - shift.y;
+    var newCoordLeft = mapPinMainElement.offsetLeft - shift.x;
+    mapPinMainElement.style.top = Math.max(MAX_TOP_SHIFT, Math.min(newCoordTop, MAX_BOTTOM_SHIFT)) + 'px';
+    mapPinMainElement.style.left = Math.max(MAX_LEFT_SHIFT, Math.min(newCoordLeft, MAP_WIDTH - PIN_WIDTH)) + 'px';
   }
 
   var onMouseUp = function (upEvt) {
