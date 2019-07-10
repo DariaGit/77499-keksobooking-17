@@ -162,8 +162,10 @@ var pins = createPins(PINS_LIMIT);
 
 mapPinMainElement.addEventListener('mousedown', function (evt) {
   evt.preventDefault();
-  activatePage();
-  renderPins(pins);
+  if (!isPageActive) {
+    activatePage();
+    renderPins(pins);
+  }
   var startCoords = {
     x: evt.clientX,
     y: evt.clientY
