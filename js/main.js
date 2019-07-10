@@ -5,6 +5,9 @@ var PIN_WIDTH = 50;
 var PIN_HEIGHT = 70;
 var PIN_LIMIT_Y_START = 130;
 var PIN_LIMIT_Y_END = 630;
+var MAX_TOP_SHIFT = 130;
+var MAX_BOTTOM_SHIFT = 630;
+var MAX_LEFT_SHIFT = 0;
 var ACCOMODATION_TYPES = [
   'palace',
   'flat',
@@ -184,8 +187,21 @@ mapPinMainElement.addEventListener('mousedown', function (evt) {
       y: moveEvt.clientY
     };
 
-    mapPinMainElement.style.top = (mapPinMainElement.offsetTop - shift.y) + 'px';
-    mapPinMainElement.style.left = (mapPinMainElement.offsetLeft - shift.x) + 'px';
+    if (mapPinMainElement.offsetTop < MAX_TOP_SHIFT - PIN_HEIGHT / 2) {
+      mapPinMainElement.style.top = MAX_TOP_SHIFT - PIN_HEIGHT / 2 + 'px';
+    } else if (mapPinMainElement.offsetTop > MAX_BOTTOM_SHIFT) {
+      mapPinMainElement.style.top = MAX_BOTTOM_SHIFT + 'px';
+    } else {
+      mapPinMainElement.style.top = (mapPinMainElement.offsetTop - shift.y) + 'px';
+    }
+
+    if (mapPinMainElement.offsetLeft < MAX_LEFT_SHIFT) {
+      mapPinMainElement.style.left = MAX_LEFT_SHIFT + 'px';
+    } else if (mapPinMainElement.offsetLeft > MAP_WIDTH - PIN_WIDTH) {
+      mapPinMainElement.style.left = MAP_WIDTH - PIN_WIDTH + 'px';
+    } else {
+      mapPinMainElement.style.left = (mapPinMainElement.offsetLeft - shift.x) + 'px';
+    }
   }
 
   var onMouseUp = function (upEvt) {
