@@ -187,21 +187,8 @@ mapPinMainElement.addEventListener('mousedown', function (evt) {
       y: moveEvt.clientY
     };
 
-    if (mapPinMainElement.offsetTop < MAX_TOP_SHIFT - PIN_HEIGHT / 2) {
-      mapPinMainElement.style.top = MAX_TOP_SHIFT - PIN_HEIGHT / 2 + 'px';
-    } else if (mapPinMainElement.offsetTop > MAX_BOTTOM_SHIFT) {
-      mapPinMainElement.style.top = MAX_BOTTOM_SHIFT + 'px';
-    } else {
-      mapPinMainElement.style.top = (mapPinMainElement.offsetTop - shift.y) + 'px';
-    }
-
-    if (mapPinMainElement.offsetLeft < MAX_LEFT_SHIFT) {
-      mapPinMainElement.style.left = MAX_LEFT_SHIFT + 'px';
-    } else if (mapPinMainElement.offsetLeft > MAP_WIDTH - PIN_WIDTH) {
-      mapPinMainElement.style.left = MAP_WIDTH - PIN_WIDTH + 'px';
-    } else {
-      mapPinMainElement.style.left = (mapPinMainElement.offsetLeft - shift.x) + 'px';
-    }
+    mapPinMainElement.style.top = Math.max(MAX_TOP_SHIFT, Math.min((mapPinMainElement.offsetTop - shift.y), MAX_BOTTOM_SHIFT)) + 'px';
+    mapPinMainElement.style.left = Math.max(MAX_LEFT_SHIFT, Math.min((mapPinMainElement.offsetLeft - shift.x), MAP_WIDTH - PIN_WIDTH)) + 'px';
   }
 
   var onMouseUp = function (upEvt) {
