@@ -31,7 +31,7 @@
     return urls;
   }
 
-  window.createPin = function createPin(index) {
+  window.createPin = function (index) {
     return {
       'author': {
         'avatar': avatarURLs[index % avatarURLs.length]

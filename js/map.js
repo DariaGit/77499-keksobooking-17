@@ -42,35 +42,17 @@
     mapPinsElement.appendChild(fragment);
   }
 
-  function addDisabledAttribute(element) {
-    element.setAttribute('disabled', 'disabled');
-  }
-
-  function addDisabledAttributes(elements) {
-    elements.forEach(addDisabledAttribute);
-  }
-
-  function removeDisabledAttribute(element) {
-    element.removeAttribute('disabled');
-  }
-
-  function removeDisabledAttributes(elements) {
-    elements.forEach(removeDisabledAttribute);
-  }
-
   function activatePage() {
     mapElement.classList.remove('map--faded');
-    addFormElement.classList.remove('ad-form--disabled');
     filtersElement.classList.remove('map__filters--disabled');
-    removeDisabledAttributes(adFormFieldsets);
+    window.form.activate();
     isPageActive = true;
   }
 
   function deactivatePage() {
     mapElement.classList.add('map--faded');
-    addFormElement.classList.add('ad-form--disabled');
     filtersElement.classList.add('map__filters--disabled');
-    addDisabledAttributes(adFormFieldsets);
+    window.form.deactivate();
     isPageActive = false;
   }
 
@@ -93,7 +75,6 @@
   var pins = createPins(PINS_LIMIT);
   var pinTemplateElement = document.querySelector('#pin').content.querySelector('button'); // карта
   var addFormElement = document.querySelector('.ad-form');
-  var adFormFieldsets = addFormElement.querySelectorAll('fieldset');
   var mapPinMainElement = document.querySelector('.map__pin--main');
   var mapElement = document.querySelector('.map');
   var mapPinMainImageElement = document.querySelector('.map__pin--main img');

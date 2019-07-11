@@ -13,10 +13,41 @@
     formPriceElement.setAttribute('placeholder', RoomTypeMinPriceMap[type]);
   }
 
+  function addDisabledAttribute(element) {
+    element.setAttribute('disabled', 'disabled');
+  }
+
+  function addDisabledAttributes(elements) {
+    elements.forEach(addDisabledAttribute);
+  }
+
+  function removeDisabledAttribute(element) {
+    element.removeAttribute('disabled');
+  }
+
+  function removeDisabledAttributes(elements) {
+    elements.forEach(removeDisabledAttribute);
+  }
+
+  window.form = function () {
+    return {
+      activate: function () {
+        addFormElement.classList.remove('ad-form--disabled');
+        removeDisabledAttributes(adFormFieldsets);
+      },
+      deactivate: function () {
+        addFormElement.classList.add('ad-form--disabled');
+        addDisabledAttributes(adFormFieldsets);
+      }
+    };
+  };
+
   var formTypeElement = document.querySelector('#type');
   var formPriceElement = document.querySelector('#price');
   var formTimeInElement = document.querySelector('#timein');
   var formTimeOutElement = document.querySelector('#timeout');
+  var addFormElement = document.querySelector('.ad-form');
+  var adFormFieldsets = addFormElement.querySelectorAll('fieldset');
 
   formTypeElement.addEventListener('change', function (evt) {
     updateFormPriceAttributes(evt.target.value);
