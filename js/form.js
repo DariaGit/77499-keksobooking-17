@@ -29,7 +29,7 @@
     elements.forEach(removeDisabledAttribute);
   }
 
-  window.form = function () {
+  window.form = (function () {
     return {
       activate: function () {
         addFormElement.classList.remove('ad-form--disabled');
@@ -40,7 +40,7 @@
         addDisabledAttributes(adFormFieldsets);
       }
     };
-  };
+  })();
 
   var formTypeElement = document.querySelector('#type');
   var formPriceElement = document.querySelector('#price');

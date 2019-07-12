@@ -86,6 +86,7 @@
     evt.preventDefault();
     if (!isPageActive) {
       activatePage();
+
       renderPins(pins);
     }
     var startCoords = {
