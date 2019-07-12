@@ -31,7 +31,7 @@
     return urls;
   }
 
-  window.createPin = function (index) {
+  function createPin(index) {
     return {
       'author': {
         'avatar': avatarURLs[index % avatarURLs.length]
@@ -44,6 +44,16 @@
         'y': generateRandomNumber(PIN_LIMIT_Y_START, PIN_LIMIT_Y_END - PIN_HEIGHT)
       }
     };
+  }
+
+  window.createPins = function (limit) {
+    var pins = [];
+
+    for (var i = 0; i < limit; i++) {
+      pins.push(createPin(i));
+    }
+
+    return pins;
   };
 
   var avatarURLs = createAvatarURLs(AVATARS_LIMIT);

@@ -7,16 +7,6 @@
   var PINS_LIMIT = 8;
   var isPageActive;
 
-  function createPins(limit) {
-    var pins = [];
-
-    for (var i = 0; i < limit; i++) {
-      pins.push(window.createPin(i));
-    }
-
-    return pins;
-  }
-
   function createPinElement(pin, index) {
     var pinElement = pinTemplateElement.cloneNode(true);
     var pinImageElement = pinElement.querySelector('img');
@@ -72,7 +62,7 @@
     addFormAddressInputElement.value = coordinates.left + ', ' + coordinates.top;
   }
 
-  var pins = createPins(PINS_LIMIT);
+  var pins = window.createPins(PINS_LIMIT);
   var pinTemplateElement = document.querySelector('#pin').content.querySelector('button'); // карта
   var addFormElement = document.querySelector('.ad-form');
   var mapPinMainElement = document.querySelector('.map__pin--main');
