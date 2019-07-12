@@ -46,7 +46,7 @@
     isPageActive = false;
   }
 
-  function calculateMainPinCoords() {
+  window.calculateMainPinCoords = function () {
     var mainPinRect = mapPinMainImageElement.getBoundingClientRect();
     var mapRect = mapPinsElement.getBoundingClientRect();
     var topOffset = isPageActive ? mainPinRect.height + PIN_LEG_HEIGHT : mainPinRect.height / 2;
@@ -55,20 +55,17 @@
       top: Math.round(mainPinRect.top - mapRect.top + topOffset),
       left: Math.round(mainPinRect.left - mapRect.left + mainPinRect.width / 2)
     };
-  }
+  };
 
   function addStartPinCoordinates() {
-    var coordinates = calculateMainPinCoords();
-    addFormAddressInputElement.value = coordinates.left + ', ' + coordinates.top;
+    window.setCoordinates();
   }
 
   var pins = window.createPins(PINS_LIMIT);
-  var pinTemplateElement = document.querySelector('#pin').content.querySelector('button'); // карта
-  var addFormElement = document.querySelector('.ad-form');
+  var pinTemplateElement = document.querySelector('#pin').content.querySelector('button');
   var mapPinMainElement = document.querySelector('.map__pin--main');
   var mapElement = document.querySelector('.map');
   var mapPinMainImageElement = document.querySelector('.map__pin--main img');
-  var addFormAddressInputElement = addFormElement.querySelector('input[name="address"]'); // форма
   var filtersElement = document.querySelector('.map__filters');
   var mapPinsElement = document.querySelector('.map__pins');
 
@@ -76,7 +73,6 @@
     evt.preventDefault();
     if (!isPageActive) {
       activatePage();
-
       renderPins(pins);
     }
     var startCoords = {

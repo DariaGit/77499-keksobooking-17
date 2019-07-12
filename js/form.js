@@ -42,12 +42,18 @@
     };
   })();
 
+  window.setCoordinates = function () {
+    var coordinates = window.calculateMainPinCoords();
+    addFormAddressInputElement.value = coordinates.left + ', ' + coordinates.top;
+  };
+
   var formTypeElement = document.querySelector('#type');
   var formPriceElement = document.querySelector('#price');
   var formTimeInElement = document.querySelector('#timein');
   var formTimeOutElement = document.querySelector('#timeout');
   var addFormElement = document.querySelector('.ad-form');
   var adFormFieldsets = addFormElement.querySelectorAll('fieldset');
+  var addFormAddressInputElement = addFormElement.querySelector('input[name="address"]');
 
   formTypeElement.addEventListener('change', function (evt) {
     updateFormPriceAttributes(evt.target.value);
