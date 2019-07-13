@@ -29,24 +29,6 @@
     elements.forEach(removeDisabledAttribute);
   }
 
-  window.form = (function () {
-    return {
-      activate: function () {
-        addFormElement.classList.remove('ad-form--disabled');
-        removeDisabledAttributes(adFormFieldsets);
-      },
-      deactivate: function () {
-        addFormElement.classList.add('ad-form--disabled');
-        addDisabledAttributes(adFormFieldsets);
-      }
-    };
-  })();
-
-  window.setCoordinates = function () {
-    var coordinates = window.calculateMainPinCoords();
-    addFormAddressInputElement.value = coordinates.left + ', ' + coordinates.top;
-  };
-
   var formTypeElement = document.querySelector('#type');
   var formPriceElement = document.querySelector('#price');
   var formTimeInElement = document.querySelector('#timein');
@@ -68,4 +50,18 @@
   });
 
   updateFormPriceAttributes(formTypeElement.value);
+
+  window.form = {
+    activate: function () {
+      addFormElement.classList.remove('ad-form--disabled');
+      removeDisabledAttributes(adFormFieldsets);
+    },
+    deactivate: function () {
+      addFormElement.classList.add('ad-form--disabled');
+      addDisabledAttributes(adFormFieldsets);
+    },
+    setCoordinates: function (value) {
+      addFormAddressInputElement.value = value;
+    }
+  };
 })();

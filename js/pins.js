@@ -46,15 +46,44 @@
     };
   }
 
-  window.createPins = function (limit) {
-    var pins = [];
+  function createPinElement(pin, index) {
+    var pinElement = pinTemplateElement.cloneNode(true);
+    var pinImageElement = pinElement.querySelector('img');
 
-    for (var i = 0; i < limit; i++) {
-      pins.push(createPin(i));
-    }
+    pinElement.style.left = pin.location.x + 'px';
+    pinElement.style.top = pin.location.y + 'px';
+    pinElement.alt = 'заголовок объявления ' + index;
 
-    return pins;
-  };
+    pinImageElement.src = pin.author.avatar;
+
+    return pinElement;
+  }
+
 
   var avatarURLs = createAvatarURLs(AVATARS_LIMIT);
+  var mapPinsElement = document.querySelector('.map__pins');
+  var pinTemplateElement = document.querySelector('#pin').content.querySelector('button');
+
+  window.pins = {
+    render: function (pins) {
+      var fragment = document.createDocumentFragment();
+
+      pins.forEach(function (pin, index) {
+        fragment.appendChild(
+            createPinElement(pin, index)
+        );
+      });
+
+      mapPinsElement.appendChild(fragment);
+    },
+    create: function (limit) {
+      var pins = [];
+
+      for (var i = 0; i < limit; i++) {
+        pins.push(createPin(i));
+      }
+
+      return pins;
+    }
+  }
 })();
