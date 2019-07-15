@@ -1,7 +1,8 @@
 'use strict';
 
-window.load = function (url, onSuccess, onError) {
+window.load = function (onSuccess, onError) {
   var xhr = new XMLHttpRequest();
+  var url = 'https://js.dump.academy/keksobooking/data';
 
   xhr.responseType = 'json';
 

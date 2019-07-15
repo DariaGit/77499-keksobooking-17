@@ -20,7 +20,7 @@
   }
 
   var pins = [];
-  window.load('https://js.dump.academy/keksobooking/data', function (data) {
+  window.load(function (data) {
     pins = data;
 
     window.mainPin.setMouseDownCallback(function () {
