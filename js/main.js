@@ -1,7 +1,6 @@
 'use strict';
 
 (function () {
-  // var PINS_LIMIT = 8;
   var isPageActive;
 
   function activatePage() {
@@ -20,7 +19,10 @@
     isPageActive = false;
   }
 
-  var pins = window.pins.create();
+  var pins = [];
+  window.load('https://js.dump.academy/keksobooking/data', function (data) {
+    pins = data;
+  });
 
   var mapRect = window.map.getRect();
   var coordinates = window.mainPin.calculateMainPinCoords(mapRect, isPageActive);
