@@ -1,7 +1,6 @@
 'use strict';
 
 (function () {
-  var PINS_LIMIT = 8;
   var isPageActive;
 
   function activatePage() {
@@ -20,7 +19,17 @@
     isPageActive = false;
   }
 
-  var pins = window.pins.create(PINS_LIMIT);
+  var pins = [];
+  window.backend.load(function (data) {
+    pins = data;
+
+    window.mainPin.setMouseDownCallback(function () {
+      if (!isPageActive) {
+        activatePage();
+        window.pins.render(pins);
+      }
+    });
+  }, window.error.create);
 
   var mapRect = window.map.getRect();
   var coordinates = window.mainPin.calculateMainPinCoords(mapRect, isPageActive);
@@ -28,13 +37,6 @@
   deactivatePage();
 
   window.form.setCoordinates(coordinates.left + ', ' + coordinates.top);
-
-  window.mainPin.setMouseDownCallback(function () {
-    if (!isPageActive) {
-      activatePage();
-      window.pins.render(pins);
-    }
-  });
 
   window.mainPin.setMouseMoveCallback(function () {
     var coords = window.mainPin.calculateMainPinCoords(mapRect, isPageActive);
