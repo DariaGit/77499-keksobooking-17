@@ -1,9 +1,6 @@
 'use strict';
 
 (function () {
-  // var PIN_WIDTH = 50;
-  // var PIN_HEIGHT = 70;
-
   function createPinElement(pin, index) {
     var pinElement = pinTemplateElement.cloneNode(true);
     var pinImageElement = pinElement.querySelector('img');
