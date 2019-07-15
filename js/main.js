@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var PINS_LIMIT = 8;
+  // var PINS_LIMIT = 8;
   var isPageActive;
 
   function activatePage() {
@@ -20,7 +20,7 @@
     isPageActive = false;
   }
 
-  var pins = window.pins.create(PINS_LIMIT);
+  var pins = window.pins.create();
 
   var mapRect = window.map.getRect();
   var coordinates = window.mainPin.calculateMainPinCoords(mapRect, isPageActive);

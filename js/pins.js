@@ -1,47 +1,49 @@
 'use strict';
 
 (function () {
-  var AVATARS_LIMIT = 8;
+  // var AVATARS_LIMIT = 8;
   var PIN_WIDTH = 50;
   var PIN_HEIGHT = 70;
-  var PIN_LIMIT_Y_START = 130;
-  var PIN_LIMIT_Y_END = 630;
-  var MAP_WIDTH = 1200;
-  var ACCOMODATION_TYPES = [
-    'palace',
-    'flat',
-    'house',
-    'bungalo'
-  ];
+  // var PIN_LIMIT_Y_START = 130;
+  // var PIN_LIMIT_Y_END = 630;
+  // var MAP_WIDTH = 1200;
+  // var ACCOMODATION_TYPES = [
+  //   'palace',
+  //   'flat',
+  //   'house',
+  //   'bungalo'
+  // ];
 
-  function generateRandomNumber(min, max) {
-    return Math.round(Math.random() * (max - min) + min);
-  }
+  // function generateRandomNumber(min, max) {
+  //   return Math.round(Math.random() * (max - min) + min);
+  // }
 
-  function getRandomElement(array) {
-    var randomIndex = generateRandomNumber(0, array.length - 1);
-    return array[randomIndex];
-  }
+  // function getRandomElement(array) {
+  //   var randomIndex = generateRandomNumber(0, array.length - 1);
+  //   return array[randomIndex];
+  // }
 
-  function createAvatarURLs(avatarsCount) {
-    var urls = [];
-    for (var i = 1; i < avatarsCount + 1; i++) {
-      urls.push('img/avatars/user0' + i + '.png');
-    }
-    return urls;
-  }
+  // function createAvatarURLs(avatarsCount) {
+  //   var urls = [];
+  //   for (var i = 1; i < avatarsCount + 1; i++) {
+  //     urls.push('img/avatars/user0' + i + '.png');
+  //   }
+  //   return urls;
+  // }
 
-  function createPin(index) {
+  var testPins = window.load('https://js.dump.academy/keksobooking/data');
+
+  function createPin() {
     return {
       'author': {
-        'avatar': avatarURLs[index % avatarURLs.length]
+        'avatar': testPins.author.avatar
       },
       'offer': {
-        'type': getRandomElement(ACCOMODATION_TYPES)
+        'type': testPins.offer.type
       },
       'location': {
-        'x': generateRandomNumber(PIN_WIDTH / 2, MAP_WIDTH - PIN_WIDTH / 2),
-        'y': generateRandomNumber(PIN_LIMIT_Y_START, PIN_LIMIT_Y_END - PIN_HEIGHT)
+        'x': testPins.location.x - PIN_WIDTH / 2,
+        'y': testPins.Location.y - PIN_HEIGHT / 2
       }
     };
   }
@@ -60,7 +62,7 @@
   }
 
 
-  var avatarURLs = createAvatarURLs(AVATARS_LIMIT);
+  // var avatarURLs = createAvatarURLs(AVATARS_LIMIT);
   var mapPinsElement = document.querySelector('.map__pins');
   var pinTemplateElement = document.querySelector('#pin').content.querySelector('button');
 
@@ -78,12 +80,11 @@
     },
     create: function (limit) {
       var pins = [];
-
       for (var i = 0; i < limit; i++) {
         pins.push(createPin(i));
       }
 
       return pins;
     }
-  }
+  };
 })();
