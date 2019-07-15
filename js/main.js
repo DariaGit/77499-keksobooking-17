@@ -20,7 +20,7 @@
   }
 
   var pins = [];
-  window.load(function (data) {
+  window.backend.load(function (data) {
     pins = data;
 
     window.mainPin.setMouseDownCallback(function () {
