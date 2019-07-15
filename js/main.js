@@ -28,7 +28,7 @@
         activatePage();
         window.pins.render(pins);
       }
-    });
+    }, window.error);
   });
 
   var mapRect = window.map.getRect();
