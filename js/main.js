@@ -29,7 +29,7 @@
         window.pins.render(pins);
       }
     });
-  }, window.error);
+  }, window.error.create);
 
   var mapRect = window.map.getRect();
   var coordinates = window.mainPin.calculateMainPinCoords(mapRect, isPageActive);
