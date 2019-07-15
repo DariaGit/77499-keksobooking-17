@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var mainElement = document.querySelector('.main');
+  var mainElement = document.querySelector('main');
 
   window.error = function () {
     var errorTemplateElement = document.querySelector('#error').content.querySelector('.error');

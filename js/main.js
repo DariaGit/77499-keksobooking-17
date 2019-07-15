@@ -28,8 +28,8 @@
         activatePage();
         window.pins.render(pins);
       }
-    }, window.error);
-  });
+    });
+  }, window.error);
 
   var mapRect = window.map.getRect();
   var coordinates = window.mainPin.calculateMainPinCoords(mapRect, isPageActive);
