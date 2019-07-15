@@ -22,6 +22,13 @@
   var pins = [];
   window.load('https://js.dump.academy/keksobooking/data', function (data) {
     pins = data;
+
+    window.mainPin.setMouseDownCallback(function () {
+      if (!isPageActive) {
+        activatePage();
+        window.pins.render(pins);
+      }
+    });
   });
 
   var mapRect = window.map.getRect();
@@ -30,13 +37,6 @@
   deactivatePage();
 
   window.form.setCoordinates(coordinates.left + ', ' + coordinates.top);
-
-  window.mainPin.setMouseDownCallback(function () {
-    if (!isPageActive) {
-      activatePage();
-      window.pins.render(pins);
-    }
-  });
 
   window.mainPin.setMouseMoveCallback(function () {
     var coords = window.mainPin.calculateMainPinCoords(mapRect, isPageActive);
