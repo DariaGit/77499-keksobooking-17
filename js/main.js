@@ -42,4 +42,12 @@
     var coords = window.mainPin.calculateMainPinCoords(mapRect, isPageActive);
     window.form.setCoordinates(coords.left + ', ' + coords.top);
   });
+
+  var housingTypeElement = document.querySelector('#housing-type');
+
+  housingTypeElement.addEventListener('change', function (evt) {
+    var selectedType = evt.target.value;
+    var newPins = window.filters.filterPins(pins, selectedType);
+    window.pins.render(newPins);
+  });
 })();

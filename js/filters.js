@@ -9,6 +9,12 @@
     },
     deactivate: function () {
       filtersElement.classList.add('map__filters--disabled');
+    },
+    filterPins: function (pins, selectedType) {
+      var newPins = pins.filter(function () {
+        return pins.offer.type === selectedType;
+      });
+      return newPins;
     }
   };
 })();
