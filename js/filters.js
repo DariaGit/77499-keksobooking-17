@@ -4,11 +4,26 @@
   var сhangeCallback;
   var filtersElement = document.querySelector('.map__filters');
   var housingTypeElement = document.querySelector('#housing-type');
-  // @TODO: housing-price
-  // @TODO: housing-rooms
-  // @TODO: housing-guests
+  var housingPriceElement = document.querySelector('#housing-price');
+  var housingRoomsElement = document.querySelector('#housing-rooms');
+  var housingGuestsElement = document.querySelector('#housing-guests');
 
   housingTypeElement.addEventListener('change', function () {
+    // @TODO: add check
+    сhangeCallback();
+  });
+
+  housingPriceElement.addEventListener('change', function () {
+    // @TODO: add check
+    сhangeCallback();
+  });
+
+  housingRoomsElement.addEventListener('change', function () {
+    // @TODO: add check
+    сhangeCallback();
+  });
+
+  housingGuestsElement.addEventListener('change', function () {
     // @TODO: add check
     сhangeCallback();
   });
@@ -30,29 +45,5 @@
       // .slice(0, LIMIT);
     }
   };
-
-  // var FROM = 1;
-  // var TO = 10000;
-
-  // function generateArray(fromNumber, toNumber) {
-  //   var arrayOfNumbers = [];
-  //   for (var i = fromNumber; i <= toNumber; i++) {
-  //     arrayOfNumbers.push(i);
-  //   }
-  //   return arrayOfNumbers;
-  // }
-
-  // function printNumbers(number) {
-  //   if (number % 17 === 0) {
-  //     console.log('число ' + number + ' делиться на 17');
-  //   }
-
-  //   if (number % 51 === 0) {
-  //     console.log('число ' + number + ' делиться на 51');
-  //   }
-  // }
-
-  // var newArrayOfNumber = generateArray(FROM, TO);
-  // newArrayOfNumber.forEach(printNumbers);
 })();
 
