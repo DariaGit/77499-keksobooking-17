@@ -43,11 +43,9 @@
     window.form.setCoordinates(coords.left + ', ' + coords.top);
   });
 
-  var housingTypeElement = document.querySelector('#housing-type');
-
-  housingTypeElement.addEventListener('change', function (evt) {
-    var selectedType = evt.target.value;
-    var newPins = window.filters.filterPins(pins, selectedType);
-    window.pins.render(newPins);
+  window.filters.setChangeCallback(function () {
+    window.pins.render(
+        window.filters.filterPins(pins)
+    );
   });
 })();
