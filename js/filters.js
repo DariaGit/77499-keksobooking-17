@@ -6,7 +6,7 @@
   var housingTypeElement = document.querySelector('#housing-type');
   var housingPriceElement = document.querySelector('#housing-price');
   var housingRoomsElement = document.querySelector('#housing-rooms');
-  // var housingGuestsElement = document.querySelector('#housing-guests');
+  var housingGuestsElement = document.querySelector('#housing-guests');
 
   var HousingPriceMap = {
     middle: {
@@ -38,6 +38,11 @@
     housingRoomsElement.value === 'any';
   }
 
+  function filterByHousingGuestsCount(pin) {
+    return pin.offer.guests.toString() === housingGuestsElement.value ||
+    housingGuestsElement.value === 'any';
+  }
+
   filtersElement.addEventListener('change', function () {
     if (typeof сhangeCallback === 'function') {
       сhangeCallback();
@@ -58,7 +63,8 @@
       return pins
         .filter(filterByType)
         .filter(filterByPrice)
-        .filter(filterByHousingRoomsCount);
+        .filter(filterByHousingRoomsCount)
+        .filter(filterByHousingGuestsCount);
     }
   };
 })();
