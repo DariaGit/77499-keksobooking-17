@@ -31,8 +31,8 @@
       mapPinsElement.appendChild(fragment);
     },
     remove: function () {
-      var mapPinsElements = Array.from(mapPinsElement.querySelectorAll('.map__pin:not(.map__pin--main)'));
-      mapPinsElements.forEach(function (pin) {
+      Array.from(mapPinsElement.querySelectorAll('.map__pin:not(.map__pin--main)'))
+      .forEach(function (pin) {
         mapPinsElement.removeChild(pin);
       });
     }
