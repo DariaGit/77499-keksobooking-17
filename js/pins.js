@@ -31,9 +31,10 @@
       mapPinsElement.appendChild(fragment);
     },
     remove: function () {
-      while (mapPinsElement.firstChild) {
-        mapPinsElement.removeChild(mapPinsElement.firstChild);
-      }
+      var mapPinsElements = Array.from(mapPinsElement.querySelectorAll('.map__pin:not(.map__pin--main)'));
+      mapPinsElements.forEach(function (pin) {
+        mapPinsElement.removeChild(pin);
+      });
     }
   };
 })();
