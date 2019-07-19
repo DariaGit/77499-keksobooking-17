@@ -42,4 +42,11 @@
     var coords = window.mainPin.calculateMainPinCoords(mapRect, isPageActive);
     window.form.setCoordinates(coords.left + ', ' + coords.top);
   });
+
+  window.filters.setChangeCallback(function () {
+    window.pins.remove();
+    window.pins.render(
+        window.filters.filterPins(pins)
+    );
+  });
 })();
