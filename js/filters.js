@@ -27,9 +27,13 @@
   }
 
   function filterByPrice(pin) {
-    return (pin.offer.price >= HousingPriceMap[housingPriceElement.value].min &&
-    pin.offer.price <= HousingPriceMap[housingPriceElement.value].max) ||
-    housingPriceElement.value === 'any';
+    if (housingPriceElement.value === 'any') {
+      return true;
+    } else if (housingPriceElement.value === 'high') {
+      return pin.offer.price >= HousingPriceMap[pin.offer.price];
+    }
+    return pin.offer.price >= HousingPriceMap[housingPriceElement.value].min
+    && pin.offer.price < HousingPriceMap[housingPriceElement.value].max;
   }
 
   filtersElement.addEventListener('change', function () {
