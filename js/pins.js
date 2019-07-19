@@ -13,9 +13,11 @@
 
     return pinElement;
   }
+
   var PINS_LIMIT = 5;
   var mapPinsElement = document.querySelector('.map__pins');
   var pinTemplateElement = document.querySelector('#pin').content.querySelector('button');
+
   window.pins = {
     render: function (pins) {
       var fragment = document.createDocumentFragment();
@@ -25,10 +27,13 @@
             createPinElement(pin, index)
         );
       });
-      while (mapPinsElement.firstChild) {
-        mapPinsElement.removeChild(mapPinsElement.firstChild); // исчезает главный пин
-      }
+
       mapPinsElement.appendChild(fragment);
+    },
+    remove: function () {
+      while (mapPinsElement.firstChild) {
+        mapPinsElement.removeChild(mapPinsElement.firstChild);
+      }
     }
   };
 })();

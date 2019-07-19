@@ -5,8 +5,8 @@
   var filtersElement = document.querySelector('.map__filters');
   var housingTypeElement = document.querySelector('#housing-type');
   var housingPriceElement = document.querySelector('#housing-price');
-  var housingRoomsElement = document.querySelector('#housing-rooms');
-  var housingGuestsElement = document.querySelector('#housing-guests');
+  // var housingRoomsElement = document.querySelector('#housing-rooms');
+  // var housingGuestsElement = document.querySelector('#housing-guests');
 
   var HousingPriceMap = {
     middle: {

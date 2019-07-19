@@ -44,6 +44,7 @@
   });
 
   window.filters.setChangeCallback(function () {
+    window.pins.remove();
     window.pins.render(
         window.filters.filterPins(pins)
     );
