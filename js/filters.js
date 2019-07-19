@@ -5,7 +5,7 @@
   var filtersElement = document.querySelector('.map__filters');
   var housingTypeElement = document.querySelector('#housing-type');
   var housingPriceElement = document.querySelector('#housing-price');
-  // var housingRoomsElement = document.querySelector('#housing-rooms');
+  var housingRoomsElement = document.querySelector('#housing-rooms');
   // var housingGuestsElement = document.querySelector('#housing-guests');
 
   var HousingPriceMap = {
@@ -33,6 +33,11 @@
     pin.offer.price < HousingPriceMap[housingPriceElement.value].max;
   }
 
+  function filterByHousingRoomsCount(pin) {
+    return pin.offer.rooms.toString() === housingRoomsElement.value ||
+    housingRoomsElement.value === 'any';
+  }
+
   filtersElement.addEventListener('change', function () {
     if (typeof сhangeCallback === 'function') {
       сhangeCallback();
@@ -52,7 +57,8 @@
     filterPins: function (pins) {
       return pins
         .filter(filterByType)
-        .filter(filterByPrice);
+        .filter(filterByPrice)
+        .filter(filterByHousingRoomsCount);
     }
   };
 })();
