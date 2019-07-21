@@ -8,23 +8,12 @@
     'palace': 'Дворец'
   };
 
-  var mapElement = document.querySelector('.map');
-  var filtersContainerElement = document.querySelector('.map__filters-container');
-  var cardTemplateElement = document.querySelector('#card').content.querySelector('.map__card');
-  var offerCard = cardTemplateElement.cloneNode(true);
-  var offerTitleElement = offerCard.querySelector('popup__title');
-  var offerAddressElement = offerCard.querySelector('.popup__text--address');
-  var offerPriceElement = offerCard.querySelector('.popup__text--price');
-  var offerTypeElement = offerCard.querySelector('.popup__type');
-  var offerCapacityElement = offerCard.querySelector('.popup__text--capacity');
-  var offerTimeElement = offerCard.querySelector('.popup__text--time');
-  // var offerFeaturesElement = offerCard.querySelector('.popup__features');
-  var offerDescriptionElement = offerCard.querySelector('.popup__description');
-  // var offerPhotosElement = offerCard.querySelector('.popup__photos');
-  var offerAuthorAvatarElement = offerCard.querySelector('.popup__avatar');
-
   function fillTextContent(textWhere, textContent) {
-    textWhere.textContent = textContent ? textWhere.textContent = textContent : textWhere.style.display = 'none';
+    if (textContent) {
+      textWhere.textContent = textContent;
+    } else {
+      textWhere.style.display = 'none';
+    }
     return textWhere.textContent;
   }
 
@@ -54,6 +43,21 @@
 
   window.cards = {
     render: function (card) {
+      var mapElement = document.querySelector('.map');
+      var filtersContainerElement = document.querySelector('.map__filters-container');
+      var cardTemplateElement = document.querySelector('#card').content.querySelector('.map__card');
+      var offerCard = cardTemplateElement.cloneNode(true);
+      var offerTitleElement = offerCard.querySelector('popup__title');
+      var offerAddressElement = offerCard.querySelector('.popup__text--address');
+      var offerPriceElement = offerCard.querySelector('.popup__text--price');
+      var offerTypeElement = offerCard.querySelector('.popup__type');
+      var offerCapacityElement = offerCard.querySelector('.popup__text--capacity');
+      var offerTimeElement = offerCard.querySelector('.popup__text--time');
+      // var offerFeaturesElement = offerCard.querySelector('.popup__features');
+      var offerDescriptionElement = offerCard.querySelector('.popup__description');
+      // var offerPhotosElement = offerCard.querySelector('.popup__photos');
+      var offerAuthorAvatarElement = offerCard.querySelector('.popup__avatar');
+
       fillTextContent(offerTitleElement, card.offer.title);
       fillTextContent(offerAddressElement, card.offer.address);
       fillPrice(offerPriceElement, card.offer.price);

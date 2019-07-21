@@ -21,13 +21,11 @@
   window.pins = {
     render: function (pins) {
       var fragment = document.createDocumentFragment();
-
       pins.slice(0, PINS_LIMIT).forEach(function (pin, index) {
         fragment.appendChild(
             createPinElement(pin, index)
         );
       });
-
       mapPinsElement.appendChild(fragment);
     },
     remove: function () {
