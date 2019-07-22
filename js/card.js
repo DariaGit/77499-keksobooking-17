@@ -28,17 +28,10 @@
   var offerPhotoElement = offerPhotosElement.querySelector('img');
   var offerAuthorAvatarElement = offerCard.querySelector('.popup__avatar');
 
-  function fillTextContent(textWhere, textContent) {
-    if (textContent) {
-      textWhere.textContent = textContent;
-    } else {
-      textWhere.style.display = 'none';
-    }
-    return textWhere.textContent;
-  }
-
-  function fillAccomodationType(textWhere, textContent) {
-    textWhere.textContent = AccomodationTypeMap[fillTextContent(textWhere, textContent)];
+  function fillAccomodationType(pin) {
+    var accormodationType = AccomodationTypeMap[pin.offer.type];
+    offerTypeElement.textContent = accormodationType;
+    offerTypeElement.style.display = accormodationType ? 'block' : 'none';
   }
 
   function fillPhoto(pin) {
@@ -62,7 +55,7 @@
     offerTitleElement.textContent = pin.offer.title;
     offerAddressElement.textContent = pin.offer.address;
     offerPriceElement.textContent = TEXT_PRICE.replace('{price}', pin.offer.price);
-    fillAccomodationType(offerTypeElement, pin.offer.type);
+    fillAccomodationType(pin);
     TEXT_CAPACITY = TEXT_CAPACITY.replace('{rooms}', pin.offer.rooms);
     TEXT_CAPACITY = TEXT_CAPACITY.replace('{guests}', pin.offer.guests);
     offerCapacityElement.textContent = TEXT_CAPACITY;
