@@ -1,6 +1,10 @@
 'use strict';
 
 (function () {
+  var TEXT_CAPACITY = '{rooms} комнаты для {guests} гостей';
+  var TEXT_TIME = 'Заезд после {checkin}, выезд до {checkout}';
+  var TEXT_PRICE = '{price}₽/ночь';
+
   var AccomodationTypeMap = {
     'flat': 'Квартира',
     'bungalo': 'Бунгало',
@@ -32,44 +36,28 @@
     return textWhere.textContent;
   }
 
-  function fillPrice(textWhere, textContent) {
-    textWhere.textContent = fillTextContent(textWhere, textContent) + '₽/ночь';
-  }
-
   function fillAccomodationType(textWhere, textContent) {
     textWhere.textContent = AccomodationTypeMap[fillTextContent(textWhere, textContent)];
   }
 
-  function fillCapacity(textWhere, rooms, guests) {
-    textWhere.textContent = fillTextContent(textWhere, rooms) + ' комнаты для ' +
-    fillTextContent(textWhere, guests) + ' гостей';
-  }
+  function render(pin) {
+    offerTitleElement.textContent = pin.offer.title;
+    offerAddressElement.textContent = pin.offer.address;
+    offerPriceElement.textContent = TEXT_PRICE.replace('{price}', pin.offer.price);
+    fillAccomodationType(offerTypeElement, pin.offer.type);
+    TEXT_CAPACITY = TEXT_CAPACITY.replace('{rooms}', pin.offer.rooms);
+    TEXT_CAPACITY = TEXT_CAPACITY.replace('{guests}', pin.offer.guests);
+    offerCapacityElement.textContent = TEXT_CAPACITY;
+    TEXT_TIME = TEXT_TIME.replace('{checkin}', pin.offer.checkin);
+    TEXT_TIME = TEXT_TIME.replace('{checkout}', pin.offer.checkout);
+    offerTimeElement.textContent = TEXT_TIME;
+    offerDescriptionElement.textContent = pin.offer.description;
+    offerAuthorAvatarElement.src = pin.author.avatar;
 
-  function fillTime(textWhere, checkin, checkout) {
-    textWhere.textContent = 'Заезд после ' + fillTextContent(textWhere, checkin) +
-    'выезд до ' + fillTextContent(textWhere, checkout);
-  }
-
-  function addAuthorAvatar(whereSRC, source) {
-    if (source) {
-      whereSRC.src = source;
-    }
+    mapElement.insertBefore(offerCard, filtersContainerElement);
   }
 
   window.card = {
-    render: function (pin) {
-      fillTextContent(offerTitleElement, pin.offer.title);
-      fillTextContent(offerAddressElement, pin.offer.address);
-      fillPrice(offerPriceElement, pin.offer.price);
-      fillAccomodationType(offerTypeElement, pin.offer.type);
-      fillCapacity(offerCapacityElement, pin.offer.rooms, pin.offer.guests);
-      fillTime(offerTimeElement, pin.offer.checkin, pin.offer.checkout);
-      fillTextContent(offerDescriptionElement, pin.offer.description);
-      addAuthorAvatar(offerAuthorAvatarElement, pin.author.avatar);
-
-      offerTitleElement.textContent = pin.offer.title;
-
-      mapElement.insertBefore(offerCard, filtersContainerElement);
-    }
+    render: render
   };
 })();
