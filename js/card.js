@@ -46,10 +46,8 @@
     offerPriceElement.textContent = TEXT_PRICE.replace('{price}', pin.offer.price);
     offerTypeElement.textContent = accormodationType;
     offerTypeElement.style.display = accormodationType ? 'block' : 'none';
-    TEXT_CAPACITY = TEXT_CAPACITY.replace('{rooms}', pin.offer.rooms).replace('{guests}', pin.offer.guests);
-    offerCapacityElement.textContent = TEXT_CAPACITY;
-    TEXT_TIME = TEXT_TIME.replace('{checkin}', pin.offer.checkin).replace('{checkout}', pin.offer.checkout);
-    offerTimeElement.textContent = TEXT_TIME;
+    offerCapacityElement.textContent = TEXT_CAPACITY.replace('{rooms}', pin.offer.rooms).replace('{guests}', pin.offer.guests);
+    offerTimeElement.textContent = TEXT_TIME.replace('{checkin}', pin.offer.checkin).replace('{checkout}', pin.offer.checkout);
     offerDescriptionElement.textContent = pin.offer.description;
     offerAuthorAvatarElement.src = pin.author.avatar;
     renderPhotos(pin.offer.photos);
