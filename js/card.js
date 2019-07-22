@@ -35,15 +35,15 @@
   }
 
   function fillPhoto(pin) {
-    var offerPhoto;
+    var offerImgElement;
     if (pin.offer.photos.length > 0) {
       pin.offer.photos.forEach(function (item, index) {
         if (index === 0) {
           offerPhotoElement.src = item;
         } else {
-          offerPhoto = offerPhotoElement.cloneNode(true);
-          offerPhoto.src = item;
-          offerPhotosElement.appendChild(offerPhoto);
+          offerImgElement = offerPhotoElement.cloneNode(true);
+          offerImgElement.src = item;
+          offerPhotosElement.appendChild(offerImgElement);
         }
       });
     } else {
