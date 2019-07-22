@@ -26,23 +26,16 @@
   var offerDescriptionElement = offerCardElement.querySelector('.popup__description');
   var offerPhotosElement = offerCardElement.querySelector('.popup__photos');
   var offerPhotoElement = offerPhotosElement.querySelector('img');
+  var offerPhotoElementTemplate = offerPhotoElement.cloneNode(true);
   var offerAuthorAvatarElement = offerCardElement.querySelector('.popup__avatar');
 
-  function fillPhoto(pin) {
-    var offerImgElement;
-    if (pin.offer.photos.length > 0) {
-      pin.offer.photos.forEach(function (item, index) {
-        if (index === 0) {
-          offerPhotoElement.src = item;
-        } else {
-          offerImgElement = offerPhotoElement.cloneNode(true);
-          offerImgElement.src = item;
-          offerPhotosElement.appendChild(offerImgElement);
-        }
-      });
-    } else {
-      offerPhotoElement.style.display = 'none';
-    }
+  function renderPhotos(photos) {
+    offerPhotosElement.innerHTML = '';
+    photos.forEach(function (photo) {
+      offerPhotoElement = offerPhotoElementTemplate.cloneNode(true);
+      offerPhotoElement.src = photo;
+      offerPhotosElement.appendChild(offerPhotoElement);
+    });
   }
 
   function render(pin) {
@@ -59,7 +52,7 @@
     offerTimeElement.textContent = TEXT_TIME;
     offerDescriptionElement.textContent = pin.offer.description;
     offerAuthorAvatarElement.src = pin.author.avatar;
-    fillPhoto(pin);
+    renderPhotos(pin.offer.photos);
     mapElement.insertBefore(offerCardElement, filtersContainerElement);
   }
 
