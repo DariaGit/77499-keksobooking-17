@@ -22,7 +22,7 @@
   var offerTypeElement = offerCardElement.querySelector('.popup__type');
   var offerCapacityElement = offerCardElement.querySelector('.popup__text--capacity');
   var offerTimeElement = offerCardElement.querySelector('.popup__text--time');
-  // var offerFeaturesElement = offerCardElement.querySelector('.popup__features');
+  var offerFeaturesElement = offerCardElement.querySelector('.popup__features');
   var offerDescriptionElement = offerCardElement.querySelector('.popup__description');
   var offerPhotosElement = offerCardElement.querySelector('.popup__photos');
   var offerPhotoElement = offerPhotosElement.querySelector('img');
@@ -38,19 +38,39 @@
     });
   }
 
+  function renderFeatures(features) {
+    offerFeaturesElement.innerHTML = '';
+    if (features && features.length > 0) {
+      features.forEach(function (feature) {
+        var featureElement = document.createElement('li');
+        featureElement.classList.add('popup__feature');
+        featureElement.classList.add('popup__feature--' + feature);
+        offerFeaturesElement.appendChild(featureElement);
+      });
+    } else {
+      offerFeaturesElement.style.display = 'none';
+    }
+  }
+
   function render(pin) {
     var accormodationType = AccomodationTypeMap[pin.offer.type];
 
     offerTitleElement.textContent = pin.offer.title;
     offerAddressElement.textContent = pin.offer.address;
-    offerPriceElement.textContent = TEXT_PRICE.replace('{price}', pin.offer.price);
+    offerPriceElement.textContent = TEXT_PRICE
+    .replace('{price}', pin.offer.price);
     offerTypeElement.textContent = accormodationType;
     offerTypeElement.style.display = accormodationType ? 'block' : 'none';
-    offerCapacityElement.textContent = TEXT_CAPACITY.replace('{rooms}', pin.offer.rooms).replace('{guests}', pin.offer.guests);
-    offerTimeElement.textContent = TEXT_TIME.replace('{checkin}', pin.offer.checkin).replace('{checkout}', pin.offer.checkout);
+    offerCapacityElement.textContent = TEXT_CAPACITY
+    .replace('{rooms}', pin.offer.rooms)
+    .replace('{guests}', pin.offer.guests);
+    offerTimeElement.textContent = TEXT_TIME
+    .replace('{checkin}', pin.offer.checkin)
+    .replace('{checkout}', pin.offer.checkout);
     offerDescriptionElement.textContent = pin.offer.description;
     offerAuthorAvatarElement.src = pin.author.avatar;
     renderPhotos(pin.offer.photos);
+    renderFeatures(pin.offer.features);
     mapElement.insertBefore(offerCardElement, filtersContainerElement);
   }
 
