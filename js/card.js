@@ -24,7 +24,8 @@
   var offerTimeElement = offerCard.querySelector('.popup__text--time');
   // var offerFeaturesElement = offerCard.querySelector('.popup__features');
   var offerDescriptionElement = offerCard.querySelector('.popup__description');
-  // var offerPhotosElement = offerCard.querySelector('.popup__photos');
+  var offerPhotosElement = offerCard.querySelector('.popup__photos');
+  var offerPhotoElement = offerPhotosElement.querySelector('img');
   var offerAuthorAvatarElement = offerCard.querySelector('.popup__avatar');
 
   function fillTextContent(textWhere, textContent) {
@@ -40,6 +41,23 @@
     textWhere.textContent = AccomodationTypeMap[fillTextContent(textWhere, textContent)];
   }
 
+  function fillPhoto(pin) {
+    var offerPhoto;
+    if (pin.offer.photos.length > 0) {
+      pin.offer.photos.forEach(function (item, index) {
+        if (index === 0) {
+          offerPhotoElement.src = item;
+        } else {
+          offerPhoto = offerPhotoElement.cloneNode(true);
+          offerPhoto.src = item;
+          offerPhotosElement.appendChild(offerPhoto);
+        }
+      });
+    } else {
+      offerPhotoElement.style.display = 'none';
+    }
+  }
+
   function render(pin) {
     offerTitleElement.textContent = pin.offer.title;
     offerAddressElement.textContent = pin.offer.address;
@@ -53,7 +71,7 @@
     offerTimeElement.textContent = TEXT_TIME;
     offerDescriptionElement.textContent = pin.offer.description;
     offerAuthorAvatarElement.src = pin.author.avatar;
-
+    fillPhoto(pin);
     mapElement.insertBefore(offerCard, filtersContainerElement);
   }
 
