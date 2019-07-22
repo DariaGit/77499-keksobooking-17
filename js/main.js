@@ -27,7 +27,7 @@
       if (!isPageActive) {
         activatePage();
         window.pins.render(pins);
-        window.cards.render(pins[0]);
+        window.card.render(pins[0]);
       }
     });
 
