@@ -27,8 +27,10 @@
       if (!isPageActive) {
         activatePage();
         window.pins.render(pins);
+        window.card.render(pins[0]);
       }
     });
+
   }, window.error.create);
 
   var mapRect = window.map.getRect();
