@@ -15,18 +15,18 @@
   var mapElement = document.querySelector('.map');
   var filtersContainerElement = document.querySelector('.map__filters-container');
   var cardTemplateElement = document.querySelector('#card').content.querySelector('.map__card');
-  var offerCard = cardTemplateElement.cloneNode(true);
-  var offerTitleElement = offerCard.querySelector('.popup__title');
-  var offerAddressElement = offerCard.querySelector('.popup__text--address');
-  var offerPriceElement = offerCard.querySelector('.popup__text--price');
-  var offerTypeElement = offerCard.querySelector('.popup__type');
-  var offerCapacityElement = offerCard.querySelector('.popup__text--capacity');
-  var offerTimeElement = offerCard.querySelector('.popup__text--time');
-  // var offerFeaturesElement = offerCard.querySelector('.popup__features');
-  var offerDescriptionElement = offerCard.querySelector('.popup__description');
-  var offerPhotosElement = offerCard.querySelector('.popup__photos');
+  var offerCardElement = cardTemplateElement.cloneNode(true);
+  var offerTitleElement = offerCardElement.querySelector('.popup__title');
+  var offerAddressElement = offerCardElement.querySelector('.popup__text--address');
+  var offerPriceElement = offerCardElement.querySelector('.popup__text--price');
+  var offerTypeElement = offerCardElement.querySelector('.popup__type');
+  var offerCapacityElement = offerCardElement.querySelector('.popup__text--capacity');
+  var offerTimeElement = offerCardElement.querySelector('.popup__text--time');
+  // var offerFeaturesElement = offerCardElement.querySelector('.popup__features');
+  var offerDescriptionElement = offerCardElement.querySelector('.popup__description');
+  var offerPhotosElement = offerCardElement.querySelector('.popup__photos');
   var offerPhotoElement = offerPhotosElement.querySelector('img');
-  var offerAuthorAvatarElement = offerCard.querySelector('.popup__avatar');
+  var offerAuthorAvatarElement = offerCardElement.querySelector('.popup__avatar');
 
   function fillAccomodationType(pin) {
     var accormodationType = AccomodationTypeMap[pin.offer.type];
@@ -65,7 +65,7 @@
     offerDescriptionElement.textContent = pin.offer.description;
     offerAuthorAvatarElement.src = pin.author.avatar;
     fillPhoto(pin);
-    mapElement.insertBefore(offerCard, filtersContainerElement);
+    mapElement.insertBefore(offerCardElement, filtersContainerElement);
   }
 
   window.card = {
