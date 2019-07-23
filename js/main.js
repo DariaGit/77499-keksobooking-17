@@ -39,9 +39,7 @@
 
   window.form.setCoordinates(coordinates.left + ', ' + coordinates.top);
 
-  window.pins.setPinClickCallback(function (pin) {
-    window.card.create(pin);
-  });
+  window.pins.setPinClickCallback(window.card.create);
 
   window.mainPin.setMouseMoveCallback(function () {
     var coords = window.mainPin.calculateMainPinCoords(mapRect, isPageActive);
