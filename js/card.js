@@ -43,16 +43,21 @@
   }
 
   function renderFeatures(features) {
+    var hasFeatures = Boolean(features && features.length);
+    var fragment;
+
     offerFeaturesElement.innerHTML = '';
-    if (features && features.length > 0) {
+    offerFeaturesElement.style.display = hasFeatures ? 'block' : 'none';
+
+    if (hasFeatures) {
+      fragment = document.createDocumentFragment();
       features.forEach(function (feature) {
-        var featureElement = document.createElement('li');
-        featureElement.classList.add('popup__feature');
-        featureElement.classList.add('popup__feature--' + feature);
-        offerFeaturesElement.appendChild(featureElement);
+        var element = document.createElement('li');
+        element.classList.add('popup__feature');
+        element.classList.add('popup__feature--' + feature);
+        fragment.appendChild(element);
       });
-    } else {
-      offerFeaturesElement.style.display = 'none';
+      offerFeaturesElement.appendChild(fragment);
     }
   }
 
@@ -122,7 +127,7 @@
 
   window.card = {
     create: function (pin) {
-      if (!mapElement.contains(offerCardElement)) {
+      if (mapElement.contains(offerCardElement)) {
         destroy();
       }
       render(pin);
