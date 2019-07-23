@@ -27,7 +27,6 @@
       if (!isPageActive) {
         activatePage();
         window.pins.render(pins);
-        window.card.render(pins[0]);
       }
     });
 
@@ -39,6 +38,8 @@
   deactivatePage();
 
   window.form.setCoordinates(coordinates.left + ', ' + coordinates.top);
+
+  window.pins.setPinClickCallback(window.card.create);
 
   window.mainPin.setMouseMoveCallback(function () {
     var coords = window.mainPin.calculateMainPinCoords(mapRect, isPageActive);
