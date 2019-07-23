@@ -11,6 +11,11 @@
 
     pinImageElement.src = pin.author.avatar;
 
+    pinElement.addEventListener('click', function (evt) {
+      evt.preventDefault();
+      window.card.render(pin);
+    });
+
     return pinElement;
   }
 
