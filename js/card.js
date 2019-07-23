@@ -5,6 +5,9 @@
   var TEXT_TIME = 'Заезд после {checkin}, выезд до {checkout}';
   var TEXT_PRICE = '{price}₽/ночь';
 
+  var KEY_CODE_ESC = 27;
+  var KEY_CODE_ENTER = 13;
+
   var AccomodationTypeMap = {
     'flat': 'Квартира',
     'bungalo': 'Бунгало',
@@ -28,6 +31,7 @@
   var offerPhotoElement = offerPhotosElement.querySelector('img');
   var offerPhotoElementTemplate = offerPhotoElement.cloneNode(true);
   var offerAuthorAvatarElement = offerCardElement.querySelector('.popup__avatar');
+  var popupCloseElement = offerCardElement.querySelector('.popup__close');
 
   function renderPhotos(photos) {
     offerPhotosElement.innerHTML = '';
@@ -74,7 +78,30 @@
     mapElement.insertBefore(offerCardElement, filtersContainerElement);
   }
 
+  function remove() {
+    if (offerCardElement) {
+      mapElement.removeChild(offerCardElement);
+    }
+  }
+
+  popupCloseElement.addEventListener('click', function () {
+    remove();
+  });
+
+  popupCloseElement.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === KEY_CODE_ENTER) {
+      remove();
+    }
+  });
+
+  document.addEventListener('keydown', function (evt) {
+    if (offerCardElement && evt.keyCode === KEY_CODE_ESC) {
+      remove();
+    }
+  });
+
   window.card = {
-    render: render
+    render: render,
+    remove: remove
   };
 })();
