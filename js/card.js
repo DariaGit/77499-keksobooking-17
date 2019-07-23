@@ -84,18 +84,18 @@
   }
 
   function onPopupCloseElementClick() {
-    unrender();
+    destroy();
   }
 
   function onPopupCloseElementKeydown(evt) {
-    if (offerCardElement && evt.keyCode === KEY_CODE_ENTER) {
-      unrender();
+    if (evt.keyCode === KEY_CODE_ENTER) {
+      destroy();
     }
   }
 
   function onDocumentKeydown(evt) {
-    if (offerCardElement && evt.keyCode === KEY_CODE_ESC) {
-      unrender();
+    if (evt.keyCode === KEY_CODE_ESC) {
+      destroy();
     }
   }
 
@@ -115,14 +115,18 @@
     document.removeEventListener('keydown', onDocumentKeydown);
   }
 
+  function destroy() {
+    unrender();
+    destroyListeners();
+  }
+
   window.card = {
     create: function (pin) {
+      if (!mapElement.contains(offerCardElement)) {
+        destroy();
+      }
       render(pin);
       createListeners();
-    },
-    destroy: function () {
-      unrender();
-      destroyListeners();
     }
   };
 })();
