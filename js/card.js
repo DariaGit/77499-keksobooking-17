@@ -74,10 +74,14 @@
     offerCapacityElement.textContent = TEXT_CAPACITY
       .replace('{rooms}', pin.offer.rooms)
       .replace('{guests}', pin.offer.guests);
+    offerCapacityElement.style.display = pin.offer.rooms ||
+    pin.offer.guests ? 'block' : 'none';
 
     offerTimeElement.textContent = TEXT_TIME
       .replace('{checkin}', pin.offer.checkin)
       .replace('{checkout}', pin.offer.checkout);
+    offerTimeElement.style.display = pin.offer.checkin !== '0:00' ||
+      pin.offer.checkout !== '0:00' ? 'block' : 'none';
 
     offerPriceElement.textContent = TEXT_PRICE
       .replace('{price}', pin.offer.price);
