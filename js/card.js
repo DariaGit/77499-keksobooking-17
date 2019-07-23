@@ -59,49 +59,70 @@
   function render(pin) {
     var accormodationType = AccomodationTypeMap[pin.offer.type];
 
-    offerTitleElement.textContent = pin.offer.title;
+    offerAuthorAvatarElement.src = pin.author.avatar;
     offerAddressElement.textContent = pin.offer.address;
-    offerPriceElement.textContent = TEXT_PRICE
-    .replace('{price}', pin.offer.price);
+    offerTitleElement.textContent = pin.offer.title;
     offerTypeElement.textContent = accormodationType;
     offerTypeElement.style.display = accormodationType ? 'block' : 'none';
-    offerCapacityElement.textContent = TEXT_CAPACITY
-    .replace('{rooms}', pin.offer.rooms)
-    .replace('{guests}', pin.offer.guests);
-    offerTimeElement.textContent = TEXT_TIME
-    .replace('{checkin}', pin.offer.checkin)
-    .replace('{checkout}', pin.offer.checkout);
     offerDescriptionElement.textContent = pin.offer.description;
-    offerAuthorAvatarElement.src = pin.author.avatar;
+
+    offerCapacityElement.textContent = TEXT_CAPACITY
+      .replace('{rooms}', pin.offer.rooms)
+      .replace('{guests}', pin.offer.guests);
+
+    offerTimeElement.textContent = TEXT_TIME
+      .replace('{checkin}', pin.offer.checkin)
+      .replace('{checkout}', pin.offer.checkout);
+
+    offerPriceElement.textContent = TEXT_PRICE
+      .replace('{price}', pin.offer.price);
+
     renderPhotos(pin.offer.photos);
     renderFeatures(pin.offer.features);
+
     mapElement.insertBefore(offerCardElement, filtersContainerElement);
   }
 
-  function remove() {
-    if (offerCardElement) {
-      mapElement.removeChild(offerCardElement);
+  function onPopupCloseElementClick() {
+    unrender();
+  }
+
+  function onPopupCloseElementKeydown(evt) {
+    if (offerCardElement && evt.keyCode === KEY_CODE_ENTER) {
+      unrender();
     }
   }
 
-  popupCloseElement.addEventListener('click', function () {
-    remove();
-  });
-
-  popupCloseElement.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === KEY_CODE_ENTER) {
-      remove();
-    }
-  });
-
-  document.addEventListener('keydown', function (evt) {
+  function onDocumentKeydown(evt) {
     if (offerCardElement && evt.keyCode === KEY_CODE_ESC) {
-      remove();
+      unrender();
     }
-  });
+  }
+
+  function createListeners() {
+    popupCloseElement.addEventListener('click', onPopupCloseElementClick);
+    popupCloseElement.addEventListener('keydown', onPopupCloseElementKeydown);
+    document.addEventListener('keydown', onDocumentKeydown);
+  }
+
+  function unrender() {
+    mapElement.removeChild(offerCardElement);
+  }
+
+  function destroyListeners() {
+    popupCloseElement.removeEventListener('click', onPopupCloseElementClick);
+    popupCloseElement.removeEventListener('keydown', onPopupCloseElementKeydown);
+    document.removeEventListener('keydown', onDocumentKeydown);
+  }
 
   window.card = {
-    render: render,
-    remove: remove
+    create: function (pin) {
+      render(pin);
+      createListeners();
+    },
+    destroy: function () {
+      unrender();
+      destroyListeners();
+    }
   };
 })();
