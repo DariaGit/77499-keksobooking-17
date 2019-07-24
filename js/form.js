@@ -47,20 +47,6 @@
   var adFormFieldsets = addFormElement.querySelectorAll('fieldset');
   var addFormAddressInputElement = addFormElement.querySelector('input[name="address"]');
 
-  formTypeElement.addEventListener('change', function (evt) {
-    updateFormPriceAttributes(evt.target.value);
-  });
-
-  formTimeInElement.addEventListener('change', function (evt) {
-    formTimeOutElement.selectedIndex = evt.target.selectedIndex;
-  });
-
-  formTimeOutElement.addEventListener('change', function (evt) {
-    formTimeInElement.selectedIndex = evt.target.selectedIndex;
-  });
-
-  updateFormPriceAttributes(formTypeElement.value);
-
   function setRoomsCapacityStartValue() {
     formRoomNumberElement.item(0).setAttribute('selected', 'selected');
     formCapacityElements.forEach(function (item) {
@@ -69,10 +55,21 @@
     });
     formCapacityElement.item(2).setAttribute('selected', 'selected');
     formCapacityElement.item(2).removeAttribute('disabled', 'disabled');
-
   }
 
-  formRoomNumberElement.addEventListener('change', function () {
+  function onFormTypeElementChange(evt) {
+    updateFormPriceAttributes(evt.target.value);
+  }
+
+  function onFormTimeInElementChange(evt) {
+    formTimeOutElement.selectedIndex = evt.target.selectedIndex;
+  }
+
+  function onFormTimeOutElementChange(evt) {
+    formTimeInElement.selectedIndex = evt.target.selectedIndex;
+  }
+
+  function onFormRoomNumberElementChange() {
     var capacities = roomsToCapacityMap[formRoomNumberElement.value];
 
     formCapacityElements.forEach(function (element) {
@@ -85,17 +82,35 @@
         element.setAttribute('selected', 'selected');
       }
     });
-  });
+  }
+
+  function createListeners() {
+    formTypeElement.addEventListener('change', onFormTypeElementChange);
+    formTimeInElement.addEventListener('change', onFormTimeInElementChange);
+    formTimeOutElement.addEventListener('change', onFormTimeOutElementChange);
+    formRoomNumberElement.addEventListener('change', onFormRoomNumberElementChange);
+  }
+
+  function destroyListeners() {
+    formTypeElement.removeEventListener('change', onFormTypeElementChange);
+    formTimeInElement.removeEventListener('change', onFormTimeInElementChange);
+    formTimeOutElement.removeEventListener('change', onFormTimeOutElementChange);
+    formRoomNumberElement.removeEventListener('change', onFormRoomNumberElementChange);
+  }
+
+  updateFormPriceAttributes(formTypeElement.value);
 
   window.form = {
     activate: function () {
       addFormElement.classList.remove('ad-form--disabled');
+      createListeners();
       removeDisabledAttributes(adFormFieldsets);
     },
     deactivate: function () {
       addFormElement.classList.add('ad-form--disabled');
       addDisabledAttributes(adFormFieldsets);
       setRoomsCapacityStartValue();
+      destroyListeners();
     },
     setCoordinates: function (value) {
       addFormAddressInputElement.value = value;
