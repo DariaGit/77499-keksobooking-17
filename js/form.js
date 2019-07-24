@@ -8,6 +8,13 @@
     palace: 10000
   };
 
+  var roomsToCapacityMap = {
+    '1': ['1'],
+    '2': ['2', '1'],
+    '3': ['3', '2', '1'],
+    '100': ['0']
+  };
+
   function updateFormPriceAttributes(type) {
     formPriceElement.setAttribute('min', RoomTypeMinPriceMap[type]);
     formPriceElement.setAttribute('placeholder', RoomTypeMinPriceMap[type]);
@@ -66,31 +73,18 @@
   }
 
   formRoomNumberElement.addEventListener('change', function () {
-    formCapacityElements.forEach(function (item) {
-      item.setAttribute('disabled', 'disabled');
-      item.removeAttribute('selected', 'selected');
-    });
+    var capacities = roomsToCapacityMap[formRoomNumberElement.value];
 
-    switch (formRoomNumberElement.value) {
-      case '1':
-        formCapacityElement.item(2).removeAttribute('disabled', 'disabled');
-        formCapacityElement.item(2).setAttribute('selected', 'selected');
-        break;
-      case '2':
-        formCapacityElement.item(1).removeAttribute('disabled', 'disabled');
-        formCapacityElement.item(2).removeAttribute('disabled', 'disabled');
-        formCapacityElement.item(1).setAttribute('selected', 'selected');
-        break;
-      case '3':
-        formCapacityElement.item(0).removeAttribute('disabled', 'disabled');
-        formCapacityElement.item(1).removeAttribute('disabled', 'disabled');
-        formCapacityElement.item(2).removeAttribute('disabled', 'disabled');
-        formCapacityElement.item(0).setAttribute('selected', 'selected');
-        break;
-      case '100':
-        formCapacityElement.item(3).removeAttribute('disabled', 'disabled');
-        formCapacityElement.item(3).setAttribute('selected', 'selected');
-    }
+    formCapacityElements.forEach(function (element) {
+      element.removeAttribute('selected');
+      element.removeAttribute('disabled');
+      if (capacities.indexOf(element.value) === -1) {
+        element.setAttribute('disabled', 'disabled');
+      } else {
+        element.removeAttribute('disabled');
+        element.setAttribute('selected', 'selected');
+      }
+    });
   });
 
   window.form = {
