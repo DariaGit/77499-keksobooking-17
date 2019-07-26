@@ -35,7 +35,7 @@
         if (text) {
             var textElement = element.querySelector('[data-role="message"]')
             if (textElement) {
-                textElement.textContent = text
+                textElement.textContent = text;
             }
         }
 
@@ -47,7 +47,7 @@
         mainElement.appendChild(activeElement);
     }
 
-    funciotn destroyMessage() {
+    function destroyMessage() {
         document.removeEventListener('keydown', onDocumentKeydown);
         document.removeEventListener('click', onDocumentClick);
 
