@@ -29,7 +29,7 @@ window.backend = {
     xhr.send();
   },
 
-  send: function (onSuccess, onError) {
+  send: function (data, onSuccess, onError) {
     var xhr = new XMLHttpRequest();
     var url = 'https://js.dump.academy/keksobooking';
 
@@ -54,7 +54,7 @@ window.backend = {
     xhr.timeout = 10000;
 
     xhr.open('POST', url);
-    xhr.send();
+    xhr.send(data);
   }
 };
 
