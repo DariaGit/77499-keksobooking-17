@@ -20,6 +20,7 @@
   }
 
   var pins = [];
+
   window.backend.load(function (data) {
     pins = data;
 
@@ -30,7 +31,7 @@
       }
     });
 
-  }, window.error.createOnLoad);
+  }, window.messages.createErrorMessage);
 
   var mapRect = window.map.getRect();
   var coordinates = window.mainPin.calculateMainPinCoords(mapRect, isPageActive);
@@ -38,6 +39,13 @@
   deactivatePage();
 
   window.form.setCoordinates(coordinates.left + ', ' + coordinates.top);
+  window.form.setSubmitCallback(function(formData) {
+    window.backend.send(
+      formData,
+      window.messages.createSuccessMessage,
+      window.messages.createErrorMessage
+    );
+  })
 
   window.pins.setPinClickCallback(window.card.create);
 

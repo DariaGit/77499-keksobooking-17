@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+
   var RoomTypeMinPriceMap = {
     bungalo: 0,
     flat: 1000,
@@ -8,7 +9,7 @@
     palace: 10000
   };
 
-  var roomsToCapacityMap = {
+  var RoomsToCapacityMap = {
     '1': ['1'],
     '2': ['2', '1'],
     '3': ['3', '2', '1'],
@@ -35,6 +36,8 @@
   function removeDisabledAttributes(elements) {
     elements.forEach(removeDisabledAttribute);
   }
+
+  var submitCallback;
 
   var formTypeElement = document.querySelector('#type');
   var formPriceElement = document.querySelector('#price');
@@ -70,7 +73,7 @@
   }
 
   function onFormRoomNumberElementChange() {
-    var capacities = roomsToCapacityMap[formRoomNumberElement.value];
+    var capacities = RoomsToCapacityMap[formRoomNumberElement.value];
 
     formCapacityElements.forEach(function (element) {
       element.removeAttribute('selected');
@@ -86,8 +89,9 @@
 
   function onAddFormElementSubmit(evt) {
     evt.preventDefault();
-    var formData = new FormData(addFormElement);
-    window.backend.send(formData, window.success.create, window.error.createOnSend);
+    if (typeof submitCallback === "function") {
+      submitCallback(new FormData(addFormElement));
+    }
   }
 
   function createListeners() {
@@ -122,6 +126,9 @@
     },
     setCoordinates: function (value) {
       addFormAddressInputElement.value = value;
+    },
+    setSubmitCallback: function (callback) {
+      submitCallback = callback;
     }
   };
 })();
