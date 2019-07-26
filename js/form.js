@@ -87,7 +87,7 @@
   function onAddFormElementSubmit(evt) {
     evt.preventDefault();
     var formData = new FormData(addFormElement);
-    window.backend.send(formData, window.success.create, window.error.create);
+    window.backend.send(formData, window.success.create, window.error.createOnSend);
   }
 
   function createListeners() {

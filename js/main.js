@@ -30,7 +30,7 @@
       }
     });
 
-  }, window.error.create);
+  }, window.error.createOnLoad);
 
   var mapRect = window.map.getRect();
   var coordinates = window.mainPin.calculateMainPinCoords(mapRect, isPageActive);
