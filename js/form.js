@@ -46,6 +46,7 @@
   var addFormElement = document.querySelector('.ad-form');
   var adFormFieldsets = addFormElement.querySelectorAll('fieldset');
   var addFormAddressInputElement = addFormElement.querySelector('input[name="address"]');
+  var addFormSubmitButtonElement = addFormElement.querySelector('.ad-form__submit');
 
   function setRoomsCapacityStartValue() {
     formRoomNumberElement.item(0).setAttribute('selected', 'selected');
