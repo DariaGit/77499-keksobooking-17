@@ -50,11 +50,17 @@
     window.backend.send(
         formData,
         function () {
-          window.messages.createSuccessMessage();
           deactivatePage();
+          window.form.setCoordinates(coordinates.left + ', ' + coordinates.top);
+          window.messages.createSuccessMessage();
         },
         window.messages.createErrorMessage
     );
+  });
+
+  window.form.setFormResetCallback(function () {
+    deactivatePage();
+    window.form.setCoordinates(coordinates.left + ', ' + coordinates.top);
   });
 
   window.pins.setPinClickCallback(window.card.create);

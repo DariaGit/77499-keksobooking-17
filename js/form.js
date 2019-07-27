@@ -49,6 +49,7 @@
   var addFormElement = document.querySelector('.ad-form');
   var adFormFieldsets = addFormElement.querySelectorAll('fieldset');
   var addFormAddressInputElement = addFormElement.querySelector('input[name="address"]');
+  var addFormResetElement = addFormElement.querySelector('.ad-form__reset');
 
   function setRoomsCapacityStartValue() {
     formRoomNumberElement.item(0).setAttribute('selected', 'selected');
@@ -95,12 +96,21 @@
     }
   }
 
+  function onAddFormResetElementClick(evt) {
+    evt.preventDefault();
+
+    if (typeof submitCallback === 'function') {
+      submitCallback(new FormData(addFormElement));
+    }
+  }
+
   function createListeners() {
     formTypeElement.addEventListener('change', onFormTypeElementChange);
     formTimeInElement.addEventListener('change', onFormTimeInElementChange);
     formTimeOutElement.addEventListener('change', onFormTimeOutElementChange);
     formRoomNumberElement.addEventListener('change', onFormRoomNumberElementChange);
     addFormElement.addEventListener('submit', onAddFormElementSubmit);
+    addFormResetElement.addEventListener('click', onAddFormResetElementClick);
   }
 
   function destroyListeners() {
@@ -109,6 +119,7 @@
     formTimeOutElement.removeEventListener('change', onFormTimeOutElementChange);
     formRoomNumberElement.removeEventListener('change', onFormRoomNumberElementChange);
     addFormElement.removeEventListener('submit', onAddFormElementSubmit);
+    addFormResetElement.removeEventListener('click', onAddFormResetElementClick);
   }
 
   updateFormPriceAttributes(formTypeElement.value);
@@ -130,6 +141,9 @@
       addFormAddressInputElement.value = value;
     },
     setSubmitCallback: function (callback) {
+      submitCallback = callback;
+    },
+    setFormResetCallback: function (callback) {
       submitCallback = callback;
     }
   };
