@@ -1,8 +1,8 @@
 'use strict';
 
 (function () {
-  var URL_LOAD = 'https://js.dump.academy/keksobooking';
-  var URL_SEND = 'https://js.dump.academy/keksobooking/data';
+  var URL_LOAD = 'https://js.dump.academy/keksobooking/data';
+  var URL_SEND = 'https://js.dump.academy/keksobooking';
   var TIMEOUT = 10000;
 
   var TEXT_ERROR = 'Произошла ошибка соединения';
