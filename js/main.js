@@ -72,6 +72,7 @@
 
   window.filters.setChangeCallback(function () {
     window.pins.remove();
+    window.card.destroy();
     window.pins.render(
         window.filters.filterPins(pins)
     );
