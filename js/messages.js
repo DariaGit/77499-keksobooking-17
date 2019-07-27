@@ -2,7 +2,6 @@
 
 (function () {
   var KEY_CODE_ESC = 27;
-  // var ERROR_LOAD_TEXT = 'При отправке данных произошла ошибка запроса';
 
   var mainElement = document.querySelector('main');
   var messageSuccessTemplateElement = document.querySelector('#success').content.querySelector('.success');
