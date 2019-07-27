@@ -1,10 +1,12 @@
 'use strict';
 
-(function() {
+(function () {
   var URL_LOAD = 'https://js.dump.academy/keksobooking';
   var URL_SEND = 'https://js.dump.academy/keksobooking/data';
+  var TIMEOUT = 10000;
 
   var TEXT_ERROR = 'Произошла ошибка соединения';
+  var TEXT_LOAD_ERROR = 'Статус ответа: {status} {statusText}';
   var TEXT_TIMEOUT = 'Запрос не успел выполниться за {timeout} мс';
 
   function createRequest(url, method, onSuccess, onError, data) {
@@ -17,19 +19,21 @@
     });
 
     xhr.addEventListener('timeout', function () {
-      // onError(TEXT_TIMEOUT); // @TODO: use replace for {timeout} xhr.timeout
-      onError('Запрос не успел выполниться за ' + xhr.timeout + ' мс');
+      onError(TEXT_TIMEOUT
+        .replace('{timeout}', xhr.timeout));
     });
 
     xhr.addEventListener('load', function () {
       if (xhr.status === 200) {
         onSuccess(xhr.response);
       } else {
-        onError('Статус ответа: ' + xhr.status + ' ' + xhr.statusText); // @TODO: extract as text constant
+        onError(TEXT_LOAD_ERROR
+          .replace('{status}', xhr.status)
+          .replace('{statusText}', xhr.statusText));
       }
     });
 
-    xhr.timeout = 10000; // @TODO: extract as constant
+    xhr.timeout = TIMEOUT;
     xhr.open(method, url);
     xhr.send(data);
 
@@ -43,5 +47,5 @@
     send: function (data, onSuccess, onError) {
       createRequest(URL_SEND, 'POST', onSuccess, onError, data);
     }
-  }
+  };
 })();

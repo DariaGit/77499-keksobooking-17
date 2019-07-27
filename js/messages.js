@@ -1,66 +1,75 @@
 'use strict';
 
 (function () {
-    var KEY_CODE_ESC = 27;
-    var ERROR_LOAD_TEXT = 'При отправке данных произошла ошибка запроса';
+  var KEY_CODE_ESC = 27;
+  // var ERROR_LOAD_TEXT = 'При отправке данных произошла ошибка запроса';
 
-    var mainElement = document.querySelector('main');
-    var messageSuccessTemplateElement = document.querySelector('#success').content.querySelector('.success');
-    var messageSuccessElement = messageSuccessTemplateElement.cloneNode(true);
+  var mainElement = document.querySelector('main');
+  var messageSuccessTemplateElement = document.querySelector('#success').content.querySelector('.success');
+  var messageSuccessElement = messageSuccessTemplateElement.cloneNode(true);
 
-    var errorTemplateElement = document.querySelector('#error').content.querySelector('.error');
-    var messageErrorElement = errorTemplateElement.cloneNode(true);
+  var errorTemplateElement = document.querySelector('#error').content.querySelector('.error');
+  var messageErrorElement = errorTemplateElement.cloneNode(true);
 
-    var errorButtonElement = messageErrorElement.querySelector('.error__button');
-    var activeElement;
+  var activeElement;
+  var activeButtonElement;
 
-    function onDocumentKeydown(evt) {
-      evt.preventDefault();
-      if (evt.keyCode === KEY_CODE_ESC) {
-        destroyMessage();
-      }
+  function onDocumentKeydown(evt) {
+    evt.preventDefault();
+    if (evt.keyCode === KEY_CODE_ESC) {
+      destroyMessage();
+    }
+  }
+
+  function onDocumentClick() {
+    destroyMessage();
+  }
+
+  function onButtonElementClick() {
+    destroyMessage();
+  }
+
+  function createMessage(element, text) {
+    var buttonElement = element.querySelector('[data-role="button"]');
+    var textElement = element.querySelector('[data-role="message"]');
+
+    activeElement = element;
+    activeButtonElement = buttonElement;
+
+    if (text && textElement) {
+      textElement.textContent = text;
     }
 
-    function onDocumentClick() {
-        destroyMessage();
+    document.addEventListener('keydown', onDocumentKeydown);
+    document.addEventListener('click', onDocumentClick);
+
+    if (activeButtonElement) {
+      activeButtonElement.addEventListener('click', onButtonElementClick);
     }
 
-    function onErrorButtonElementClick() {
-        destroyMessage();
+    mainElement.appendChild(activeElement);
+  }
+
+  function destroyMessage() {
+    document.removeEventListener('keydown', onDocumentKeydown);
+    document.removeEventListener('click', onDocumentClick);
+
+    if (activeButtonElement) {
+      activeButtonElement.removeEventListener('click', onButtonElementClick);
     }
 
-    function createMessage(element, text) {
-        activeElement = element;
+    mainElement.removeChild(activeElement);
 
-        if (text) {
-            var textElement = element.querySelector('[data-role="message"]')
-            if (textElement) {
-                textElement.textContent = text;
-            }
-        }
+    activeElement = null;
+    activeButtonElement = null;
+  }
 
-        document.addEventListener('keydown', onDocumentKeydown);
-        document.addEventListener('click', onDocumentClick);
-
-        // errorButtonElement.addEventListener('click', onErrorButtonElementClick);
-
-        mainElement.appendChild(activeElement);
+  window.messages = {
+    createSuccessMessage: function () {
+      createMessage(messageSuccessElement);
+    },
+    createErrorMessage: function (text) {
+      createMessage(messageErrorElement, text);
     }
-
-    function destroyMessage() {
-        document.removeEventListener('keydown', onDocumentKeydown);
-        document.removeEventListener('click', onDocumentClick);
-
-        mainElement.removeChild(activeElement);
-    }
-
-
-    window.messages = {
-        createSuccessMessage: function() {
-            createMessage(messageSuccessElement)
-        },
-        createErrorMessage: function(text) {
-            createMessage(messageErrorElement, text)
-        }
-    };
+  };
 })();

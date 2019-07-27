@@ -12,9 +12,15 @@
   }
 
   function deactivatePage() {
+    var mapRect = window.map.getRect();
+    var coordinates = window.mainPin.calculateMainPinCoords(mapRect, isPageActive);
+
+    window.pins.remove();
     window.map.deactivate();
     window.form.deactivate();
     window.filters.deactivate();
+
+    window.form.setCoordinates(coordinates.left + ', ' + coordinates.top);
 
     isPageActive = false;
   }
@@ -39,13 +45,17 @@
   deactivatePage();
 
   window.form.setCoordinates(coordinates.left + ', ' + coordinates.top);
-  window.form.setSubmitCallback(function(formData) {
+
+  window.form.setSubmitCallback(function (formData) {
     window.backend.send(
-      formData,
-      window.messages.createSuccessMessage,
-      window.messages.createErrorMessage
+        formData,
+        function () {
+          window.messages.createSuccessMessage();
+          deactivatePage();
+        },
+        window.messages.createErrorMessage
     );
-  })
+  });
 
   window.pins.setPinClickCallback(window.card.create);
 

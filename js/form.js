@@ -89,7 +89,8 @@
 
   function onAddFormElementSubmit(evt) {
     evt.preventDefault();
-    if (typeof submitCallback === "function") {
+
+    if (typeof submitCallback === 'function') {
       submitCallback(new FormData(addFormElement));
     }
   }
@@ -120,6 +121,7 @@
     },
     deactivate: function () {
       addFormElement.classList.add('ad-form--disabled');
+      addFormElement.reset();
       addDisabledAttributes(adFormFieldsets);
       setRoomsCapacityStartValue();
       destroyListeners();
