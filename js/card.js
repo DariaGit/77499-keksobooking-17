@@ -136,6 +136,7 @@
       }
       render(pin);
       createListeners();
-    }
+    },
+    destroy: destroy
   };
 })();

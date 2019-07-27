@@ -31,6 +31,8 @@
   window.pins = {
     setPinClickCallback: function (callback) {
       pinClickCallback = callback;
+      var mapPinElement = mapPinsElement.querySelector('.map__pin');
+      mapPinElement.classList.add('map__pin--active');
     },
     render: function (pins) {
       var fragment = document.createDocumentFragment();

@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+
   var RoomTypeMinPriceMap = {
     bungalo: 0,
     flat: 1000,
@@ -8,7 +9,7 @@
     palace: 10000
   };
 
-  var roomsToCapacityMap = {
+  var RoomsToCapacityMap = {
     '1': ['1'],
     '2': ['2', '1'],
     '3': ['3', '2', '1'],
@@ -36,6 +37,8 @@
     elements.forEach(removeDisabledAttribute);
   }
 
+  var submitCallback;
+
   var formTypeElement = document.querySelector('#type');
   var formPriceElement = document.querySelector('#price');
   var formTimeInElement = document.querySelector('#timein');
@@ -46,6 +49,7 @@
   var addFormElement = document.querySelector('.ad-form');
   var adFormFieldsets = addFormElement.querySelectorAll('fieldset');
   var addFormAddressInputElement = addFormElement.querySelector('input[name="address"]');
+  var addFormResetElement = addFormElement.querySelector('.ad-form__reset');
 
   function setRoomsCapacityStartValue() {
     formRoomNumberElement.item(0).setAttribute('selected', 'selected');
@@ -70,7 +74,7 @@
   }
 
   function onFormRoomNumberElementChange() {
-    var capacities = roomsToCapacityMap[formRoomNumberElement.value];
+    var capacities = RoomsToCapacityMap[formRoomNumberElement.value];
 
     formCapacityElements.forEach(function (element) {
       element.removeAttribute('selected');
@@ -84,11 +88,29 @@
     });
   }
 
+  function onAddFormElementSubmit(evt) {
+    evt.preventDefault();
+
+    if (typeof submitCallback === 'function') {
+      submitCallback(new FormData(addFormElement));
+    }
+  }
+
+  function onAddFormResetElementClick(evt) {
+    evt.preventDefault();
+
+    if (typeof submitCallback === 'function') {
+      submitCallback(new FormData(addFormElement));
+    }
+  }
+
   function createListeners() {
     formTypeElement.addEventListener('change', onFormTypeElementChange);
     formTimeInElement.addEventListener('change', onFormTimeInElementChange);
     formTimeOutElement.addEventListener('change', onFormTimeOutElementChange);
     formRoomNumberElement.addEventListener('change', onFormRoomNumberElementChange);
+    addFormElement.addEventListener('submit', onAddFormElementSubmit);
+    addFormResetElement.addEventListener('click', onAddFormResetElementClick);
   }
 
   function destroyListeners() {
@@ -96,6 +118,8 @@
     formTimeInElement.removeEventListener('change', onFormTimeInElementChange);
     formTimeOutElement.removeEventListener('change', onFormTimeOutElementChange);
     formRoomNumberElement.removeEventListener('change', onFormRoomNumberElementChange);
+    addFormElement.removeEventListener('submit', onAddFormElementSubmit);
+    addFormResetElement.removeEventListener('click', onAddFormResetElementClick);
   }
 
   updateFormPriceAttributes(formTypeElement.value);
@@ -108,12 +132,19 @@
     },
     deactivate: function () {
       addFormElement.classList.add('ad-form--disabled');
+      addFormElement.reset();
       addDisabledAttributes(adFormFieldsets);
       setRoomsCapacityStartValue();
       destroyListeners();
     },
     setCoordinates: function (value) {
       addFormAddressInputElement.value = value;
+    },
+    setSubmitCallback: function (callback) {
+      submitCallback = callback;
+    },
+    setFormResetCallback: function (callback) {
+      submitCallback = callback;
     }
   };
 })();

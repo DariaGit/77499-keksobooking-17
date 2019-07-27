@@ -12,14 +12,21 @@
   }
 
   function deactivatePage() {
+    var mapRect = window.map.getRect();
+    var coordinates = window.mainPin.calculateMainPinCoords(mapRect, isPageActive);
+
+    window.pins.remove();
     window.map.deactivate();
     window.form.deactivate();
     window.filters.deactivate();
+
+    window.form.setCoordinates(coordinates.left + ', ' + coordinates.top);
 
     isPageActive = false;
   }
 
   var pins = [];
+
   window.backend.load(function (data) {
     pins = data;
 
@@ -30,7 +37,7 @@
       }
     });
 
-  }, window.error.create);
+  }, window.messages.createErrorMessage);
 
   var mapRect = window.map.getRect();
   var coordinates = window.mainPin.calculateMainPinCoords(mapRect, isPageActive);
@@ -38,6 +45,23 @@
   deactivatePage();
 
   window.form.setCoordinates(coordinates.left + ', ' + coordinates.top);
+
+  window.form.setSubmitCallback(function (formData) {
+    window.backend.send(
+        formData,
+        function () {
+          deactivatePage();
+          window.form.setCoordinates(coordinates.left + ', ' + coordinates.top);
+          window.messages.createSuccessMessage();
+        },
+        window.messages.createErrorMessage
+    );
+  });
+
+  window.form.setFormResetCallback(function () {
+    deactivatePage();
+    window.form.setCoordinates(coordinates.left + ', ' + coordinates.top);
+  });
 
   window.pins.setPinClickCallback(window.card.create);
 
@@ -48,6 +72,7 @@
 
   window.filters.setChangeCallback(function () {
     window.pins.remove();
+    window.card.destroy();
     window.pins.render(
         window.filters.filterPins(pins)
     );
