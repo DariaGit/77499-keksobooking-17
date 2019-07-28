@@ -52,6 +52,9 @@
         function () {
           deactivatePage();
           window.form.setCoordinates(coordinates.left + ', ' + coordinates.top);
+          window.mainPin.setCoordinates(coordinates.left, coordinates.top);
+          window.card.destroy();
+
           window.messages.createSuccessMessage();
         },
         window.messages.createErrorMessage
