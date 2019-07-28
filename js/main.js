@@ -72,10 +72,9 @@
 
   window.filters.setChangeCallback(function () {
     window.pins.remove();
-    window.pins.render(
+    window.debounce(window.pins.render(
         window.filters.filterPins(pins)
-    );
-
+    ));
     window.card.destroy();
   });
 })();
