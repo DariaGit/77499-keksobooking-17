@@ -38,6 +38,7 @@
   }
 
   var submitCallback;
+  var formResetCallback;
 
   var formTypeElement = document.querySelector('#type');
   var formPriceElement = document.querySelector('#price');
@@ -99,8 +100,8 @@
   function onAddFormResetElementClick(evt) {
     evt.preventDefault();
 
-    if (typeof submitCallback === 'function') {
-      submitCallback(new FormData(addFormElement));
+    if (typeof formResetCallback === 'function') {
+      formResetCallback(new FormData(addFormElement));
     }
   }
 
@@ -144,7 +145,7 @@
       submitCallback = callback;
     },
     setFormResetCallback: function (callback) {
-      submitCallback = callback;
+      formResetCallback = callback;
     }
   };
 })();
