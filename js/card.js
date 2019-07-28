@@ -115,7 +115,9 @@
   }
 
   function unrender() {
-    mapElement.removeChild(offerCardElement);
+    if (mapElement.contains(offerCardElement)) {
+      mapElement.removeChild(offerCardElement);
+    }
   }
 
   function destroyListeners() {
