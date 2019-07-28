@@ -44,24 +44,27 @@
     housingGuestsElement.value === 'any';
   }
 
-  var getCheckedElements = function (array) {
-    var checkedElements = [];
+  function getCheckedElements(array) {
+    var newArray = [];
+
     array.forEach(function (item) {
       if (item.checked) {
-        checkedElements.push(item.value);
+        newArray.push(item);
       }
     });
-    return checkedElements;
-  };
 
-  function filterByFeatures(features, array) {
-    array.forEach(function (item) {
-      if (features.includes(item)) {
-        return true;
-      } else {
+    return newArray;
+  }
+
+  function filterByFeatures(item) {
+    var features = getCheckedElements(housingFeaturesElement);
+
+    for (var i = 0; i < features.length; i++) {
+      if (item.offer.features.indexOf(features[i].value) === -1) {
         return false;
       }
-    });
+    }
+    return true;
   }
 
   filtersElement.addEventListener('change', function () {
@@ -85,7 +88,8 @@
         .filter(filterByType)
         .filter(filterByPrice)
         .filter(filterByHousingRoomsCount)
-        .filter(filterByHousingGuestsCount);
+        .filter(filterByHousingGuestsCount)
+        .filter(filterByFeatures);
     }
   };
 })();
