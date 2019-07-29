@@ -76,14 +76,16 @@
         ? mainPinRect.height + PIN_LEG_HEIGHT
         : mainPinRect.height / 2;
 
-      return {
+      var mainPinCoords = {
         top: Math.round(mainPinRect.top - mapRect.top + topOffset),
         left: Math.round(mainPinRect.left - mapRect.left + mainPinRect.width / 2)
       };
+
+      return mainPinCoords;
     },
-    setCoordinates: function (x, y) {
-      mapPinMainElement.style.top = y + 'px';
-      mapPinMainElement.style.left = x + 'px';
+    setCoordinates: function (mainPinCoords) {
+      mapPinMainElement.style.top = mainPinCoords.top + 'px';
+      mapPinMainElement.style.left = mainPinCoords.left + 'px';
     }
   };
 

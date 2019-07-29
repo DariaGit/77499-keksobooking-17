@@ -1,7 +1,38 @@
 'use strict';
 
 (function () {
+
   var isPageActive;
+  var pins = [];
+  var mapRect = window.map.getRect();
+  var defaultMainPinCoords = window.mainPin.calculateMainPinCoords(mapRect, isPageActive);
+
+  var filtersChangeCallback = function () {
+    window.debounce(function () {
+      window.pins.remove();
+      window.pins.render(window.filters.filterPins(pins));
+      window.card.destroy();
+    });
+  };
+
+  var formResetCallback = function () {
+    deactivatePage();
+    window.mainPin.setCoordinates(defaultMainPinCoords);
+    window.card.destroy();
+  };
+
+  var formSubmitCallback = function (formData) {
+    window.backend.send(
+        formData,
+        function () {
+          deactivatePage();
+          window.mainPin.setCoordinates(defaultMainPinCoords);
+          window.messages.createSuccessMessage();
+        },
+        window.messages.createErrorMessage
+    );
+  };
+
 
   function activatePage() {
     window.map.activate();
@@ -9,77 +40,50 @@
     window.filters.activate();
 
     isPageActive = true;
+
+    window.form.setSubmitCallback(formSubmitCallback);
+    window.pins.setPinClickCallback(window.card.create);
+    window.form.setFormResetCallback(formResetCallback);
+    window.filters.setChangeCallback(filtersChangeCallback);
+
+    window.pins.render(pins);
   }
 
   function deactivatePage() {
-    var mapRect = window.map.getRect();
-    var coordinates = window.mainPin.calculateMainPinCoords(mapRect, isPageActive);
-
     window.pins.remove();
+    window.card.destroy();
     window.map.deactivate();
-    window.form.deactivate();
     window.filters.deactivate();
-
-    window.form.setCoordinates(coordinates.left + ', ' + coordinates.top);
+    window.form.deactivate();
+    window.form.setCoordinates(defaultMainPinCoords);
 
     isPageActive = false;
+
+    window.form.setSubmitCallback();
+    window.pins.setPinClickCallback();
+    window.form.setFormResetCallback();
+    window.filters.setChangeCallback();
   }
-
-  var pins = [];
-
-  window.backend.load(function (data) {
-    pins = data;
-
-    window.mainPin.setMouseDownCallback(function () {
-      if (!isPageActive) {
-        activatePage();
-        window.pins.render(pins);
-      }
-    });
-
-  }, window.messages.createErrorMessage);
-
-  var mapRect = window.map.getRect();
-  var coordinates = window.mainPin.calculateMainPinCoords(mapRect, isPageActive);
 
   deactivatePage();
 
-  window.form.setCoordinates(coordinates.left + ', ' + coordinates.top);
-
-  window.form.setSubmitCallback(function (formData) {
-    window.backend.send(
-        formData,
-        function () {
-          deactivatePage();
-          window.form.setCoordinates(coordinates.left + ', ' + coordinates.top);
-          window.mainPin.setCoordinates(coordinates.left, coordinates.top);
-          window.card.destroy();
-
-          window.messages.createSuccessMessage();
-        },
-        window.messages.createErrorMessage
-    );
+  window.mainPin.setMouseDownCallback(function () {
+    if (!isPageActive) {
+      if (!pins.length) {
+        window.backend.load(function (data) {
+          pins = data;
+          if (!isPageActive) {
+            activatePage();
+          }
+        }, window.messages.createErrorMessage);
+      } else {
+        activatePage();
+      }
+    }
   });
-
-  window.form.setFormResetCallback(function () {
-    deactivatePage();
-    window.form.setCoordinates(coordinates.left + ', ' + coordinates.top);
-    window.mainPin.setCoordinates(coordinates.left, coordinates.top);
-    window.card.destroy();
-  });
-
-  window.pins.setPinClickCallback(window.card.create);
 
   window.mainPin.setMouseMoveCallback(function () {
     var coords = window.mainPin.calculateMainPinCoords(mapRect, isPageActive);
-    window.form.setCoordinates(coords.left + ', ' + coords.top);
+    window.form.setCoordinates(coords);
   });
-
-  window.filters.setChangeCallback(window.debounce(function () {
-    window.pins.remove();
-    window.window.pins.render(
-        window.filters.filterPins(pins)
-    );
-    window.card.destroy();
-  }));
 })();
