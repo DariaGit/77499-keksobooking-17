@@ -64,6 +64,8 @@
   window.form.setFormResetCallback(function () {
     deactivatePage();
     window.form.setCoordinates(coordinates.left + ', ' + coordinates.top);
+    window.mainPin.setCoordinates(coordinates.left, coordinates.top);
+    window.card.destroy();
   });
 
   window.pins.setPinClickCallback(window.card.create);
