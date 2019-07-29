@@ -75,11 +75,11 @@
     window.form.setCoordinates(coords.left + ', ' + coords.top);
   });
 
-  window.filters.setChangeCallback(function () {
+  window.filters.setChangeCallback(window.debounce(function () {
     window.pins.remove();
-    window.debounce(window.pins.render(
+    window.window.pins.render(
         window.filters.filterPins(pins)
-    ));
+    );
     window.card.destroy();
-  });
+  }));
 })();
