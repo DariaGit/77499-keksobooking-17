@@ -14,7 +14,6 @@
 
   var mouseDownCallback;
   var mouseMoveCallback;
-  var setCoordinatesCallback;
 
   mapPinMainElement.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
@@ -82,10 +81,9 @@
         left: Math.round(mainPinRect.left - mapRect.left + mainPinRect.width / 2)
       };
     },
-    setCoordinates: function (callback) {
-      if (typeof setCoordinatesCallback === 'function') {
-        setCoordinatesCallback = callback;
-      }
+    setCoordinates: function (x, y) {
+      mapPinMainElement.style.top = y + 'px';
+      mapPinMainElement.style.left = x + 'px';
     }
   };
 
