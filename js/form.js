@@ -138,8 +138,8 @@
       setRoomsCapacityStartValue();
       destroyListeners();
     },
-    setCoordinates: function (value) {
-      addFormAddressInputElement.value = value;
+    setCoordinates: function (coords) {
+      addFormAddressInputElement.value = coords.top + ', ' + coords.left;
     },
     setSubmitCallback: function (callback) {
       submitCallback = callback;

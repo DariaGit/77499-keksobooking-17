@@ -81,9 +81,9 @@
         left: Math.round(mainPinRect.left - mapRect.left + mainPinRect.width / 2)
       };
     },
-    setCoordinates: function (x, y) {
-      mapPinMainElement.style.top = y + 'px';
-      mapPinMainElement.style.left = x + 'px';
+    setCoordinates: function (coords) {
+      mapPinMainElement.style.top = coords.top + 'px';
+      mapPinMainElement.style.left = coords.left + 'px';
     }
   };
 
