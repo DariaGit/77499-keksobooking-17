@@ -7,6 +7,7 @@
   var housingPriceElement = document.querySelector('#housing-price');
   var housingRoomsElement = document.querySelector('#housing-rooms');
   var housingGuestsElement = document.querySelector('#housing-guests');
+  var housingFeaturesElement = Array.from(filtersElement.querySelectorAll('.map__checkbox'));
 
   var HousingPriceMap = {
     middle: {
@@ -43,6 +44,29 @@
     housingGuestsElement.value === 'any';
   }
 
+  function getCheckedElements(array) {
+    var newArray = [];
+
+    array.forEach(function (item) {
+      if (item.checked) {
+        newArray.push(item);
+      }
+    });
+
+    return newArray;
+  }
+
+  function filterByFeatures(item) {
+    var features = getCheckedElements(housingFeaturesElement);
+
+    for (var i = 0; i < features.length; i++) {
+      if (item.offer.features.indexOf(features[i].value) === -1) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   filtersElement.addEventListener('change', function () {
     if (typeof сhangeCallback === 'function') {
       сhangeCallback();
@@ -64,7 +88,8 @@
         .filter(filterByType)
         .filter(filterByPrice)
         .filter(filterByHousingRoomsCount)
-        .filter(filterByHousingGuestsCount);
+        .filter(filterByHousingGuestsCount)
+        .filter(filterByFeatures);
     }
   };
 })();

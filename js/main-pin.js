@@ -80,6 +80,10 @@
         top: Math.round(mainPinRect.top - mapRect.top + topOffset),
         left: Math.round(mainPinRect.left - mapRect.left + mainPinRect.width / 2)
       };
+    },
+    setCoordinates: function (x, y) {
+      mapPinMainElement.style.top = y + 'px';
+      mapPinMainElement.style.left = x + 'px';
     }
   };
 
