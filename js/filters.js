@@ -101,7 +101,7 @@
           filterByHousingRoomsCount(pin) &&
           filterByHousingGuestsCount(pin) &&
           filterByFeatures(pins)
-        )
+        );
       });
     }
   };

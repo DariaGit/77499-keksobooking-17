@@ -45,9 +45,9 @@
     },
     remove: function () {
       mapPinsElement.querySelectorAll('.map__pin:not(.map__pin--main)')
-      .forEach(function (pin) {
-        mapPinsElement.removeChild(pin);
-      });
+        .forEach(function (pin) {
+          mapPinsElement.removeChild(pin);
+        });
     }
   };
 })();

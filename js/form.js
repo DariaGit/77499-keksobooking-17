@@ -1,7 +1,6 @@
 'use strict';
 
 (function () {
-
   var RoomTypeMinPriceMap = {
     bungalo: 0,
     flat: 1000,
@@ -87,23 +86,16 @@
 
   function updateCapacityValidation() {
     var capacities = RoomsToCapacityMap[formRoomNumberElement.value];
-    var firstEnabledElement;
 
     formCapacityElements.forEach(function (element) {
       element.removeAttribute('selected');
       element.removeAttribute('disabled');
       if (capacities.indexOf(element.value) === -1) {
         element.setAttribute('disabled', 'disabled');
-      } else {
-        if (!firstEnabledElement) {
-          firstEnabledElement = element;
-        }
       }
     });
 
-    if (firstEnabledElement) {
-      firstEnabledElement.setAttribute('selected', 'selected');
-    }
+    formCapacityElement.value = capacities[0];
   }
 
   function createListeners() {
