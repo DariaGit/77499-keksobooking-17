@@ -51,16 +51,7 @@
   var adFormFieldsets = addFormElement.querySelectorAll('fieldset');
   var addFormAddressInputElement = addFormElement.querySelector('input[name="address"]');
   var addFormResetElement = addFormElement.querySelector('.ad-form__reset');
-
-  function setRoomsCapacityStartValue() {
-    formRoomNumberElement.item(0).setAttribute('selected', 'selected');
-    formCapacityElements.forEach(function (item) {
-      item.setAttribute('disabled', 'disabled');
-      item.removeAttribute('selected', 'selected');
-    });
-    formCapacityElement.item(2).setAttribute('selected', 'selected');
-    formCapacityElement.item(2).removeAttribute('disabled', 'disabled');
-  }
+  var defaultRoomNumberValue = formRoomNumberElement.value;
 
   function onFormTypeElementChange(evt) {
     updateFormPriceAttributes(evt.target.value);
@@ -75,18 +66,7 @@
   }
 
   function onFormRoomNumberElementChange() {
-    var capacities = RoomsToCapacityMap[formRoomNumberElement.value];
-
-    formCapacityElements.forEach(function (element) {
-      element.removeAttribute('selected');
-      element.removeAttribute('disabled');
-      if (capacities.indexOf(element.value) === -1) {
-        element.setAttribute('disabled', 'disabled');
-      } else {
-        element.removeAttribute('disabled');
-        element.setAttribute('selected', 'selected');
-      }
-    });
+    updateCapacityValidation();
   }
 
   function onAddFormElementSubmit(evt) {
@@ -102,6 +82,27 @@
 
     if (typeof formResetCallback === 'function') {
       formResetCallback(new FormData(addFormElement));
+    }
+  }
+
+  function updateCapacityValidation() {
+    var capacities = RoomsToCapacityMap[formRoomNumberElement.value];
+    var firstEnabledElement;
+
+    formCapacityElements.forEach(function (element) {
+      element.removeAttribute('selected');
+      element.removeAttribute('disabled');
+      if (capacities.indexOf(element.value) === -1) {
+        element.setAttribute('disabled', 'disabled');
+      } else {
+        if (!firstEnabledElement) {
+          firstEnabledElement = element;
+        }
+      }
+    });
+
+    if (firstEnabledElement) {
+      firstEnabledElement.setAttribute('selected', 'selected');
     }
   }
 
@@ -135,7 +136,8 @@
       addFormElement.classList.add('ad-form--disabled');
       addFormElement.reset();
       addDisabledAttributes(adFormFieldsets);
-      setRoomsCapacityStartValue();
+      formRoomNumberElement.value = defaultRoomNumberValue;
+      updateCapacityValidation();
       destroyListeners();
     },
     setCoordinates: function (coords) {

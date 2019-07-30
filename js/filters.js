@@ -19,29 +19,39 @@
       max: 10000
     },
     high: {
-      min: 50000
+      min: 50000,
+      max: Infinity
     }
   };
 
   function filterByType(pin) {
-    return pin.offer.type === housingTypeElement.value || housingTypeElement.value === 'any';
+    return (
+      housingTypeElement.value === 'any' ||
+      pin.offer.type === housingTypeElement.value
+    );
   }
 
   function filterByPrice(pin) {
-    return housingPriceElement.value === 'any' ||
-    pin.offer.price >= HousingPriceMap[pin.offer.price] ||
-    pin.offer.price >= HousingPriceMap[housingPriceElement.value].min &&
-    pin.offer.price < HousingPriceMap[housingPriceElement.value].max;
+    var price = housingPriceElement.value;
+    var limit = HousingPriceMap[price];
+    return (
+      price === 'any' ||
+      (pin.offer.price >= limit.min && pin.offer.price < limit.max)
+    );
   }
 
   function filterByHousingRoomsCount(pin) {
-    return pin.offer.rooms.toString() === housingRoomsElement.value ||
-    housingRoomsElement.value === 'any';
+    return (
+      housingRoomsElement.value === 'any' ||
+      pin.offer.rooms.toString() === housingRoomsElement.value
+    );
   }
 
   function filterByHousingGuestsCount(pin) {
-    return pin.offer.guests.toString() === housingGuestsElement.value ||
-    housingGuestsElement.value === 'any';
+    return (
+      housingGuestsElement.value === 'any' ||
+      pin.offer.guests.toString() === housingGuestsElement.value
+    );
   }
 
   function getCheckedElements(array) {
@@ -84,12 +94,15 @@
       сhangeCallback = callback;
     },
     filterPins: function (pins) {
-      return pins
-        .filter(filterByType)
-        .filter(filterByPrice)
-        .filter(filterByHousingRoomsCount)
-        .filter(filterByHousingGuestsCount)
-        .filter(filterByFeatures);
+      return pins.filter(function (pin) {
+        return (
+          filterByType(pin) &&
+          filterByPrice(pin) &&
+          filterByHousingRoomsCount(pin) &&
+          filterByHousingGuestsCount(pin) &&
+          filterByFeatures(pins)
+        )
+      });
     }
   };
 })();
