@@ -3,7 +3,7 @@
 (function () {
   var KEY_CODE_ESC = 27;
 
-  var errorMessageOnLoad = 'При отправке данных произошла ошибка запроса';
+  var ERROR_MESSAGE_ON_LOAD = 'При отправке данных произошла ошибка запроса';
 
   var mainElement = document.querySelector('main');
   var errorTemplateElement = document.querySelector('#error').content.querySelector('.error');
@@ -12,7 +12,7 @@
   var errorButtonElement = errorMessageNodeElement.querySelector('.error__button');
 
   function loadError() {
-    errorTextElement.textContent = errorMessageOnLoad;
+    errorTextElement.textContent = ERROR_MESSAGE_ON_LOAD;
     mainElement.appendChild(errorMessageNodeElement);
   }
 
