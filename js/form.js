@@ -45,7 +45,7 @@
   var formTimeOutElement = document.querySelector('#timeout');
   var formRoomNumberElement = document.querySelector('#room_number');
   var formCapacityElement = document.querySelector('#capacity');
-  var formCapacityElements = Array.from(formCapacityElement.querySelectorAll('option'));
+  var formCapacityElements = formCapacityElement.querySelectorAll('option');
   var addFormElement = document.querySelector('.ad-form');
   var adFormFieldsets = addFormElement.querySelectorAll('fieldset');
   var addFormAddressInputElement = addFormElement.querySelector('input[name="address"]');

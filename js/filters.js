@@ -100,7 +100,7 @@
           filterByPrice(pin) &&
           filterByHousingRoomsCount(pin) &&
           filterByHousingGuestsCount(pin) &&
-          filterByFeatures(pins)
+          filterByFeatures(pin)
         );
       });
     }
