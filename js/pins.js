@@ -44,7 +44,7 @@
       mapPinsElement.appendChild(fragment);
     },
     remove: function () {
-      Array.from(mapPinsElement.querySelectorAll('.map__pin:not(.map__pin--main)'))
+      mapPinsElement.querySelectorAll('.map__pin:not(.map__pin--main)')
       .forEach(function (pin) {
         mapPinsElement.removeChild(pin);
       });
