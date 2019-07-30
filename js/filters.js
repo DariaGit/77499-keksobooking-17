@@ -7,7 +7,7 @@
   var housingPriceElement = document.querySelector('#housing-price');
   var housingRoomsElement = document.querySelector('#housing-rooms');
   var housingGuestsElement = document.querySelector('#housing-guests');
-  var housingFeaturesElement = Array.from(filtersElement.querySelectorAll('.map__checkbox'));
+  var housingFeaturesElements = filtersElement.querySelectorAll('.map__checkbox');
 
   var HousingPriceMap = {
     middle: {
@@ -57,7 +57,7 @@
   }
 
   function filterByFeatures(item) {
-    var features = getCheckedElements(housingFeaturesElement);
+    var features = getCheckedElements(housingFeaturesElements);
 
     for (var i = 0; i < features.length; i++) {
       if (item.offer.features.indexOf(features[i].value) === -1) {
