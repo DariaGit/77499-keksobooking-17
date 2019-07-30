@@ -4,6 +4,7 @@
   var URL_LOAD = 'https://js.dump.academy/keksobooking/data';
   var URL_SEND = 'https://js.dump.academy/keksobooking';
   var TIMEOUT = 10000;
+  var STATUS_CODE_OK = 200;
 
   var TEXT_ERROR = 'Произошла ошибка соединения';
   var TEXT_LOAD_ERROR = 'Статус ответа: {status} {statusText}';
@@ -19,12 +20,11 @@
     });
 
     xhr.addEventListener('timeout', function () {
-      onError(TEXT_TIMEOUT
-        .replace('{timeout}', xhr.timeout));
+      onError(TEXT_TIMEOUT.replace('{timeout}', xhr.timeout));
     });
 
     xhr.addEventListener('load', function () {
-      if (xhr.status === 200) {
+      if (xhr.status === STATUS_CODE_OK) {
         onSuccess(xhr.response);
       } else {
         onError(TEXT_LOAD_ERROR
