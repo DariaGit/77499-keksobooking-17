@@ -17,8 +17,6 @@
 
   function formResetCallback() {
     deactivatePage();
-    window.mainPin.setCoordinates(defaultMainPinCoords);
-    window.card.destroy();
   }
 
   function formSubmitCallback(formData) {
@@ -66,20 +64,15 @@
 
   deactivatePage();
 
-  window.mainPin.setMouseDownCallback(function () {
-    if (!isPageActive) {
-      if (!pins.length) {
-        window.backend.load(function (data) {
-          pins = data;
-          if (!isPageActive) {
-            activatePage();
-          }
-        }, window.messages.createErrorMessage);
-      } else {
+  window.backend.load(function (data) {
+    pins = data;
+
+    window.mainPin.setMouseDownCallback(function () {
+      if (!isPageActive) {
         activatePage();
       }
-    }
-  });
+    });
+  }, window.messages.createErrorMessage);
 
   window.mainPin.setMouseMoveCallback(function () {
     var coords = window.mainPin.calculateMainPinCoords(mapRect, isPageActive);
