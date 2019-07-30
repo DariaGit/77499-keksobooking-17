@@ -127,6 +127,7 @@
     deactivate: function () {
       addFormElement.classList.add('ad-form--disabled');
       addFormElement.reset();
+      updateFormPriceAttributes(formTypeElement.value);
       addDisabledAttributes(adFormFieldsets);
       formRoomNumberElement.value = defaultRoomNumberValue;
       updateCapacityValidation();
