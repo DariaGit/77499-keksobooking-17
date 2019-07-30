@@ -7,21 +7,21 @@
   var mapRect = window.map.getRect();
   var defaultMainPinCoords = window.mainPin.calculateMainPinCoords(mapRect, isPageActive);
 
-  var filtersChangeCallback = function () {
+  function filtersChangeCallback() {
     window.debounce(function () {
       window.pins.remove();
       window.pins.render(window.filters.filterPins(pins));
       window.card.destroy();
     });
-  };
+  }
 
-  var formResetCallback = function () {
+  function formResetCallback() {
     deactivatePage();
     window.mainPin.setCoordinates(defaultMainPinCoords);
     window.card.destroy();
-  };
+  }
 
-  var formSubmitCallback = function (formData) {
+  function formSubmitCallback(formData) {
     window.backend.send(
         formData,
         function () {
@@ -31,8 +31,7 @@
         },
         window.messages.createErrorMessage
     );
-  };
-
+  }
 
   function activatePage() {
     window.map.activate();
