@@ -1,8 +1,6 @@
 'use strict';
 
 (function () {
-  var KEY_CODE_ESC = 27;
-
   var mainElement = document.querySelector('main');
   var messageSuccessTemplateElement = document.querySelector('#success').content.querySelector('.success');
   var messageSuccessElement = messageSuccessTemplateElement.cloneNode(true);
@@ -15,7 +13,7 @@
 
   function onDocumentKeydown(evt) {
     evt.preventDefault();
-    if (evt.keyCode === KEY_CODE_ESC) {
+    if (evt.keyCode === window.constants.KEY_CODE_ESC) {
       destroyMessage();
     }
   }
