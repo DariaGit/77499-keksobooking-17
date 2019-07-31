@@ -5,9 +5,6 @@
   var TEXT_TIME = 'Заезд после {checkin}, выезд до {checkout}';
   var TEXT_PRICE = '{price}₽/ночь';
 
-  var KEY_CODE_ESC = 27;
-  var KEY_CODE_ENTER = 13;
-
   var AccomodationTypeMap = {
     'flat': 'Квартира',
     'bungalo': 'Бунгало',
@@ -101,13 +98,13 @@
   }
 
   function onPopupCloseElementKeydown(evt) {
-    if (evt.keyCode === KEY_CODE_ENTER) {
+    if (evt.keyCode === window.constants.KEY_CODE_ENTER) {
       destroy();
     }
   }
 
   function onDocumentKeydown(evt) {
-    if (evt.keyCode === KEY_CODE_ESC) {
+    if (evt.keyCode === window.constants.KEY_CODE_ESC) {
       destroy();
     }
   }
